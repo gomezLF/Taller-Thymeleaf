@@ -7,11 +7,14 @@ import java.time.LocalDate;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -27,8 +30,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Salesorderdetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId
-	private SalesorderdetailPK id;
+	@Id
+	@SequenceGenerator(name = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR", allocationSize = 1, sequenceName = "SALESORDERDETAIL_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR")
+	private Integer salesorderdetailid;
 	
 	private String carriertrackingnumber;
 	
@@ -68,8 +73,8 @@ public class Salesorderdetail implements Serializable {
 		return this.carriertrackingnumber;
 	}
 
-	public SalesorderdetailPK getId() {
-		return this.id;
+	public Integer getId() {
+		return this.salesorderdetailid;
 	}
 
 	public LocalDate getModifieddate() {
@@ -104,8 +109,8 @@ public class Salesorderdetail implements Serializable {
 		this.carriertrackingnumber = carriertrackingnumber;
 	}
 
-	public void setId(SalesorderdetailPK id) {
-		this.id = id;
+	public void setId(Integer id) {
+		this.salesorderdetailid = id;
 	}
 
 	public void setModifieddate(LocalDate modifieddate) {
