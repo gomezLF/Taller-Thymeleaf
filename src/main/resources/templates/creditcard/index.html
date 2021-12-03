@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Credit Card Index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-md-10">
+				<div>
+					<h2 class="my-5">Credit Card</h2>
+					<h3 class="alert alert-primary"
+						th:if="${creditcards.iterator().hasNext() == false}">
+						There are not Credit Cards
+					</h3>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>ID</th>
+		                        <th>Card Number</th>
+		                        <th>Card Type</th>
+		                        <th>Expiration Month</th>
+		                        <th>Expiration Year</th>
+		                        <th>Modified Date</th>
+		                       <!--  <th>Sales Order Header</th> -->
+		                        <th>Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cc : ${creditcards}">
+		                        <td class="text-info" th:text="${cc.creditcardid}"></td>
+		                        <td class="text-info" th:text="${cc.cardnumber}"></td>
+		                        <td class="text-info" th:text="${cc.cardtype}"></td>
+		                        <td class="text-info" th:text="${cc.expmonth}"></td>
+		                        <td class="text-info" th:text="${cc.expyear}"></td>
+		                        <td class="text-info" th:text="${cc.modifieddate}"></td>
+		                       <!--  <td><a th:text="${cc.salesorderheaders.salesorderid}" th:href="@{/salesorderheaders?id={id}(id=${cc.salesorderheaders.salesorderid})}"></a></td> -->
+		                        <td><a th:href="@{/creditcard/edit/{id}(id=${cc.creditcardid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>
+                    		</tr>
+						</tbody>
+					</table>
+				</div>
+			    <p class="my-5"><a href="/creditcard/add"><i class="fas fa-credit-card ml-2"></i> <label>Add Credit Card</label></a></p>
+    			<p class="my-5"><a href="/salesorderheader/add"><i class="far fa-list-alt ml-2"></i> <label>Add Sales Order Header</label></a></p>
+			</div>
+		</div>
+		<a href="/"><i class="fas fa-home ml-2"></i> Go back to main</a>
+	</div>
+</body>
+</html>
