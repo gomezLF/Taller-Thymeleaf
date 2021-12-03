@@ -81,7 +81,7 @@ public class TallerPruebas {
 		addCreditcards(context);
 		addSalespersons(context);
 		addSalesheaders(context);
-		//addSalesorderdetails(context);
+		addSalesorderdetails(context);
 		finalStep(context);
 	}
 	
@@ -161,9 +161,6 @@ public class TallerPruebas {
 	
 	private static void addSalesorderdetails(ConfigurableApplicationContext context) {
 		Salesorderdetail s = new Salesorderdetail();
-		
-		SalesorderdetailPK pk = new SalesorderdetailPK();
-		s.setId(pk);
 		
 		s.setOrderqty(10);
 		s.setCarriertrackingnumber("100");
