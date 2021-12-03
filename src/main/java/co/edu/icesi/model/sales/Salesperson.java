@@ -87,6 +87,7 @@ public class Salesperson implements Serializable {
 
 	public Salesperson() {
 		setSalesorderheaders(new ArrayList<Salesorderheader>());
+		setEmployees(new ArrayList<Employee>());
 		setModifieddate(LocalDate.now());
 	}
 
@@ -95,6 +96,13 @@ public class Salesperson implements Serializable {
 		salesorderheader.setSalesperson(this);
 
 		return salesorderheader;
+	}
+	
+	public Employee addEmployee(Employee employee) {
+		getEmployees().add(employee);
+		employee.setSalesperson(this);
+		
+		return employee;
 	}
 
 	public Salespersonquotahistory addSalespersonquotahistory(Salespersonquotahistory salespersonquotahistory) {
@@ -145,6 +153,10 @@ public class Salesperson implements Serializable {
 	public List<Salesorderheader> getSalesorderheaders() {
 		return this.salesorderheaders;
 	}
+	
+	public List<Employee> getEmployees(){
+		return this.employees;
+	}
 
 	public List<Salespersonquotahistory> getSalespersonquotahistories() {
 		return this.salespersonquotahistories;
@@ -175,6 +187,13 @@ public class Salesperson implements Serializable {
 		salesorderheader.setSalesperson(null);
 
 		return salesorderheader;
+	}
+	
+	public Employee removeEmployee(Employee employee) {
+		getEmployees().remove(employee);
+		employee.setSalesperson(null);
+		
+		return employee;
 	}
 
 	public Salespersonquotahistory removeSalespersonquotahistory(Salespersonquotahistory salespersonquotahistory) {
@@ -225,7 +244,11 @@ public class Salesperson implements Serializable {
 	public void setSalesorderheaders(List<Salesorderheader> salesorderheaders) {
 		this.salesorderheaders = salesorderheaders;
 	}
-
+	
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+	
 	public void setSalespersonquotahistories(List<Salespersonquotahistory> salespersonquotahistories) {
 		this.salespersonquotahistories = salespersonquotahistories;
 	}
