@@ -38,7 +38,7 @@ public class Employee implements Serializable {
 
 	private String currentflag;
 
-	private String gender;
+	private EmployeeGender gender;
 
 	@Temporal(TemporalType.DATE)
 	private Date hiredate;
@@ -129,7 +129,7 @@ public class Employee implements Serializable {
 		return this.employeepayhistories;
 	}
 
-	public String getGender() {
+	public EmployeeGender getGender() {
 		return this.gender;
 	}
 
@@ -227,7 +227,7 @@ public class Employee implements Serializable {
 		this.employeepayhistories = employeepayhistories;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(EmployeeGender gender) {
 		this.gender = gender;
 	}
 
