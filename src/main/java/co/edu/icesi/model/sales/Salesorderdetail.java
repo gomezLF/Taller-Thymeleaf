@@ -33,7 +33,7 @@ public class Salesorderdetail implements Serializable {
 	@Id
 	@SequenceGenerator(name = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR", allocationSize = 1, sequenceName = "SALESORDERDETAIL_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR")
-	private Integer salesorderdetailid;
+	private Integer id;
 	
 	private String carriertrackingnumber;
 	
@@ -74,7 +74,7 @@ public class Salesorderdetail implements Serializable {
 	}
 
 	public Integer getId() {
-		return this.salesorderdetailid;
+		return this.id;
 	}
 
 	public LocalDate getModifieddate() {
@@ -110,7 +110,7 @@ public class Salesorderdetail implements Serializable {
 	}
 
 	public void setId(Integer id) {
-		this.salesorderdetailid = id;
+		this.id = id;
 	}
 
 	public void setModifieddate(LocalDate modifieddate) {

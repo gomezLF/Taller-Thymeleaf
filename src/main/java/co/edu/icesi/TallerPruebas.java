@@ -172,6 +172,7 @@ public class TallerPruebas {
 		
 		
 		salesorderdetailServiceImp.saveSalesOrderDetails(s);
+		System.out.println(s.getId());
 	}
 	
 	private static void finalStep(ConfigurableApplicationContext context) {
