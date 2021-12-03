@@ -9,11 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import co.edu.icesi.model.sales.Salesperson;
 
 /**
  * The persistent class for the employee database table.
@@ -58,7 +62,12 @@ public class Employee implements Serializable {
 	private Integer sickleavehours;
 
 	private Integer vacationhours;
-
+	
+	// bi-directional many-to-one association to Salesperson
+	@ManyToOne
+	@JoinColumn(name = "salespersonid")
+	private Salesperson salesperson;
+	
 	// bi-directional many-to-one association to Employeedepartmenthistory
 	@OneToMany(mappedBy = "employee")
 	private List<Employeedepartmenthistory> employeedepartmenthistories;
@@ -106,6 +115,10 @@ public class Employee implements Serializable {
 
 	public String getCurrentflag() {
 		return this.currentflag;
+	}
+	
+	public Salesperson getSalesperson() {
+		return this.salesperson;
 	}
 
 	public List<Employeedepartmenthistory> getEmployeedepartmenthistories() {
@@ -201,7 +214,11 @@ public class Employee implements Serializable {
 	public void setCurrentflag(String currentflag) {
 		this.currentflag = currentflag;
 	}
-
+	
+	public void setSalesperson(Salesperson salesperson) {
+		this.salesperson = salesperson;
+	}
+	
 	public void setEmployeedepartmenthistories(List<Employeedepartmenthistory> employeedepartmenthistories) {
 		this.employeedepartmenthistories = employeedepartmenthistories;
 	}
