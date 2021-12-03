@@ -61,8 +61,8 @@ public class Salesorderdetail implements Serializable {
 	// bi-directional many-to-one association to Specialofferproduct
 	@ManyToOne
 	@JoinColumns({
-			@JoinColumn(name = "productid", referencedColumnName = "productid", insertable = false, updatable = false),
-			@JoinColumn(name = "specialofferid", referencedColumnName = "specialofferid", insertable = false, updatable = false) })
+	@JoinColumn(name = "productid", referencedColumnName = "productid", insertable = false, updatable = false),
+	@JoinColumn(name = "specialofferid", referencedColumnName = "specialofferid", insertable = false, updatable = false) })
 	private Specialofferproduct specialofferproduct;
 
 	public Salesorderdetail() {

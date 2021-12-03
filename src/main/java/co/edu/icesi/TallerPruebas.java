@@ -42,6 +42,8 @@ public class TallerPruebas {
 	private static int creditcardId;
 	private static int salespersonId;
 	private static int businessentityId;
+	private static int detailId;
+	
 	
 	private static UserServiceImp userService;
 	private static CreditcardServiceImp creditcardServiceImp;
@@ -80,8 +82,8 @@ public class TallerPruebas {
 		addUsers(context);
 		addCreditcards(context);
 		addSalespersons(context);
-		addSalesheaders(context);
 		addSalesorderdetails(context);
+		addSalesheaders(context);
 		finalStep(context);
 	}
 	
@@ -114,7 +116,6 @@ public class TallerPruebas {
 	
 	private static void addCreditcards(ConfigurableApplicationContext context) {
 		Creditcard creditcard = new Creditcard();
-		//creditcard.setCreditcardid(456);
 		creditcard.setCardnumber("123456789963");
 		creditcard.setCardtype(CreditcardType.PLATINUM);
 		creditcard.setExpmonth(11);
@@ -154,6 +155,7 @@ public class TallerPruebas {
 		
 		header.setCreditcard(creditcardServiceImp.findCreditCard(creditcardId).get());
 		header.setSalesperson(salespersonServiceImp.findSalesperson(salespersonId).get());
+		header.addSalesorderdetail(salesorderdetailServiceImp.findSalesorderdetail(detailId).get());
 		
 		salesorderheaderServiceImp.saveSalesOrderHeader(header);
 		headerId = header.getSalesorderid();
@@ -168,15 +170,15 @@ public class TallerPruebas {
 		s.setUnitprice(new BigDecimal(5));
 		s.setUnitpricediscount(new BigDecimal(7));
 		s.setSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
-		//sod1 = sod.save(s).getId();
-		
 		
 		salesorderdetailServiceImp.saveSalesOrderDetails(s);
-		System.out.println(s.getId());
+		detailId = s.getId();
 	}
+
 	
 	private static void finalStep(ConfigurableApplicationContext context) {
-		
+		Creditcard cc = creditcardServiceImp.findCreditCard(creditcardId).get();
+		cc.addSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
 	}
 	
 }
