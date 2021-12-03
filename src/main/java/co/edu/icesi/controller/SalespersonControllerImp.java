@@ -37,14 +37,14 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@GetMapping("/add")
-	public String addSalesorderheader(Model model) {
+	public String addSalesperson(Model model) {
 		model.addAttribute("salesperson", new Salesperson());
 		return "/salesperson/add-salesperson";
 	}
 	
 	@Override
 	@PostMapping("/add")
-	public String saveSalesorderheader(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String saveSalesperson(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("salesperson", salesperson);
 			return "/salesperson/add-salesperson";
@@ -63,14 +63,14 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@GetMapping
-	public String indexSalesorderheader(Model model) {
+	public String indexSalesperson(Model model) {
 		model.addAttribute("salespersons", salespersonService.findAll());
 		return "salesperson/index";
 	}
 	
 	@Override
 	@GetMapping("/edit/{id}")
-	public String showUpdateSalesorderheader(@PathVariable("id") Integer id, Model model) {
+	public String showUpdateSalesperson(@PathVariable("id") Integer id, Model model) {
 		Optional<Salesperson> salesperson = salespersonService.findSalesperson(id);
 		
 		if(salesperson.isPresent()) {
@@ -84,7 +84,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateSalesorderheader(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model) {
+	public String updateSalesperson(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("salesperson", salesperson);
 			return "salesperson/update-salesperson";

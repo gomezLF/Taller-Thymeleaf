@@ -11,9 +11,9 @@ import co.edu.icesi.model.sales.Salesperson;
 
 public interface SalespersonController {
 	
-	public String addSalesorderheader(Model model);
-	public String indexSalesorderheader(Model model);
-	public String saveSalesorderheader(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action);
-	public String updateSalesorderheader(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model);
-	public String showUpdateSalesorderheader(@PathVariable("id") Integer id, Model model);
+	public String addSalesperson(Model model);
+	public String indexSalesperson(Model model);
+	public String saveSalesperson(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action);
+	public String updateSalesperson(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model);
+	public String showUpdateSalesperson(@PathVariable("id") Integer id, Model model);
 }
