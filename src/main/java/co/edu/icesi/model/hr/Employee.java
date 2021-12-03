@@ -1,7 +1,7 @@
 package co.edu.icesi.model.hr;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class Employee implements Serializable {
 
 	private String maritalstatus;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String nationalidnumber;
 
@@ -72,6 +72,7 @@ public class Employee implements Serializable {
 	private List<Jobcandidate> jobcandidates;
 
 	public Employee() {
+		setModifieddate(LocalDate.now());
 	}
 
 	public Employeedepartmenthistory addEmployeedepartmenthistory(Employeedepartmenthistory employeedepartmenthistory) {
@@ -139,7 +140,7 @@ public class Employee implements Serializable {
 		return this.maritalstatus;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -233,7 +234,7 @@ public class Employee implements Serializable {
 		this.maritalstatus = maritalstatus;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
