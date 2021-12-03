@@ -2,7 +2,6 @@ package co.edu.icesi.model.sales;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import co.edu.icesi.model.hr.Employee;
 
 /**
  * The persistent class for the salesperson database table.
@@ -62,6 +63,10 @@ public class Salesperson implements Serializable {
 	// bi-directional many-to-one association to Salesorderheader
 	@OneToMany(mappedBy = "salesperson")
 	private List<Salesorderheader> salesorderheaders;
+	
+	// bi-directional many-to-one association to Employee
+	@OneToMany(mappedBy = "salesperson")
+	private List<Employee> employees;
 
 	// bi-directional many-to-one association to Salesterritory
 	@ManyToOne
