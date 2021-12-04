@@ -16,6 +16,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import co.edu.icesi.model.sales.Salesperson;
 
@@ -34,21 +40,31 @@ public class Employee implements Serializable {
 	private Integer businessentityid;
 
 	@Temporal(TemporalType.DATE)
+	@NotNull(message = "El campo no debe estar vacío")
+	@Past(message = "La fecha de nacimiento del empleado debe ser anterior a la fecha actual")
 	private Date birthdate;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private String currentflag;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private EmployeeGender gender;
-
+	
 	@Temporal(TemporalType.DATE)
+	@NotNull(message = "El campo no debe estar vacío")
+	@PastOrPresent(message = "La fecha de contratación no puede ser posterior a la fecha actual")
 	private Date hiredate;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private String jobtitle;
 
 	private String loginid;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private String maritalstatus;
-
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@FutureOrPresent(message = "La fecha de modificación debe ser la actual")
 	private LocalDate modifieddate;
 
 	private String nationalidnumber;
