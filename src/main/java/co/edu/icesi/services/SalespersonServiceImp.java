@@ -1,14 +1,10 @@
 package co.edu.icesi.services;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import co.edu.icesi.exception.LogicalException;
 import co.edu.icesi.model.sales.Salesperson;
 import co.edu.icesi.repositories.BusinessentityRepo;
 import co.edu.icesi.repositories.EmployeeRepo;

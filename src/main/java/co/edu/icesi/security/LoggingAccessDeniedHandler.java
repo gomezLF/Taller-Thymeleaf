@@ -28,8 +28,13 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
                     + " was trying to access protected resource: "
                     + request.getRequestURI());
         }
-
-        response.sendRedirect(request.getContextPath() + "/access-denied");
+    	
+        String query = "?url=" + request.getRequestURI();
+        if(request.getQueryString() != null) {
+        	query = query + "?" + request.getQueryString();
+        }
+        
+        response.sendRedirect(request.getContextPath() + "/access-denied" + query);
 
     }
 }

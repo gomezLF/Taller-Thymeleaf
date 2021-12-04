@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import co.edu.icesi.model.person.UserType;
+
 
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -13,20 +15,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
     private LoggingAccessDeniedHandler accessDeniedHandler;
 	
-	 @Override
-	    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-	        httpSecurity.cors().and().authorizeRequests()
-	                .antMatchers("/salesPerson/").access("hasRole('administrator')")
-	                .antMatchers("/creditCard/").access("hasRole('operator')")
-	                .antMatchers("/salesOrdersHeader/").access("hasRole('operator')")
-	                .antMatchers("/salesOrderDetail/").access("hasRole('operator')")
-	                .anyRequest().authenticated().and()
-	                .formLogin().loginPage("/login").permitAll().and()
-	                .logout().invalidateHttpSession(true).clearAuthentication(true)
-	                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
-	                .permitAll().and()
-	                .exceptionHandling().accessDeniedHandler((AccessDeniedHandler) accessDeniedHandler);
-	    }
-
+	@Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+	 	
+	 	httpSecurity.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
+ 		.antMatchers("/salesperson/**").hasRole(UserType.ADMINISTRATIOR.toString())
+ 		.antMatchers("/creditcard/**", "/creditcard/**", "/salesordersheader/**", "/salesorderdetail/**").hasRole(UserType.OPERATOR.toString())
+ 		.anyRequest().authenticated().and()
+		.httpBasic().and().logout().invalidateHttpSession(true)
+		.clearAuthentication(true)
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling()
+		.accessDeniedHandler(accessDeniedHandler);
+	}
 }

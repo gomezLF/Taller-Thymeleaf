@@ -25,11 +25,14 @@
         class="container my-5"
         method="POST"
         action="#"
-        th:action="@{/employee/add/}"
+        th:action="@{/employee/edit/{id}(id=${employee.businessentityid})}"
         th:object="${employee}"
 >
 
-<h1>New Employee</h1>
+<h1>Change Employee Values</h1>
+  <input type="text" name="businessentityid" id="businessentityid" th:value="${employee.businessentityid}" class="form-control" readonly hidden="true">
+  <span th:if="${#fields.hasErrors('businessentityid')}" th:errors="*{businessentityid}" class="text-danger"></span>
+
   <label for="birthdate">Birth Date: </label>
   <input type="date" name="birthdate" id="birthdate" class="form-control" th:value="${employee.birthdate}" />
   <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" class="text-danger"></span>
@@ -54,7 +57,7 @@
     
   <div class="row">
     <div class="col-md-4 mt-3">
-      <input type="submit" name="action" class="btn btn-primary" value="Add">
+      <input type="submit" name="action" class="btn btn-primary" value="Save changes">
     </div>
     <div class="col-md-3 mt-3">
       <input type="submit" name="action" class="btn btn-secondary" value="Cancel">
