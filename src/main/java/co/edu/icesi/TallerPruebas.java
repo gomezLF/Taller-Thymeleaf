@@ -3,13 +3,13 @@ package co.edu.icesi;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
+import co.edu.icesi.model.hr.Employee;
 import co.edu.icesi.model.person.Businessentity;
 import co.edu.icesi.model.person.Person;
 import co.edu.icesi.model.person.User;
@@ -17,16 +17,10 @@ import co.edu.icesi.model.person.UserType;
 import co.edu.icesi.model.sales.Creditcard;
 import co.edu.icesi.model.sales.CreditcardType;
 import co.edu.icesi.model.sales.Salesorderdetail;
-import co.edu.icesi.model.sales.SalesorderdetailPK;
 import co.edu.icesi.model.sales.Salesorderheader;
 import co.edu.icesi.model.sales.Salesperson;
 import co.edu.icesi.repositories.BusinessentityRepo;
-import co.edu.icesi.repositories.CreditcardRepo;
-import co.edu.icesi.repositories.EmployeeRepo;
 import co.edu.icesi.repositories.PersonRepo;
-import co.edu.icesi.repositories.SalesorderdetailRepo;
-import co.edu.icesi.repositories.SalesorderheaderRepo;
-import co.edu.icesi.repositories.SalespersonRepo;
 import co.edu.icesi.services.CreditcardServiceImp;
 import co.edu.icesi.services.SalesorderdetailServiceImp;
 import co.edu.icesi.services.SalesorderheaderServiceImp;
@@ -36,14 +30,13 @@ import co.edu.icesi.services.UserServiceImp;
 @SpringBootApplication
 @ComponentScan(basePackages = {"co.edu.icesi"})
 public class TallerPruebas {
-	
-	
-	private static int headerId;
-	private static int creditcardId;
-	private static int salespersonId;
 	private static int businessentityId;
-	private static int detailId;
 	
+	private static Creditcard creditcard;
+	private static Employee employee;
+	private static Salesperson salesperson;
+	private static Salesorderdetail salesorderdetail;
+	private static Salesorderheader salesorderheader;
 	
 	private static UserServiceImp userService;
 	private static CreditcardServiceImp creditcardServiceImp;
@@ -51,13 +44,7 @@ public class TallerPruebas {
 	private static SalesorderheaderServiceImp salesorderheaderServiceImp;
 	private static SalespersonServiceImp salespersonServiceImp;
 	
-	
-	private static CreditcardRepo creditcardRepo;
-	private static SalesorderdetailRepo salesorderdetailRepo;
-	private static SalesorderheaderRepo salesorderheaderRepo;
-	private static SalespersonRepo salespersonRepo;
 	private static BusinessentityRepo businessentityRepo;
-	private static EmployeeRepo employeeRepo;
 	private static PersonRepo personRepository;
 	
 	
@@ -69,22 +56,19 @@ public class TallerPruebas {
 		salesorderdetailServiceImp = context.getBean(SalesorderdetailServiceImp.class);
 		salesorderheaderServiceImp = context.getBean(SalesorderheaderServiceImp.class);
 		salespersonServiceImp = context.getBean(SalespersonServiceImp.class);
-		
-		creditcardRepo = context.getBean(CreditcardRepo.class);
-		salesorderdetailRepo = context.getBean(SalesorderdetailRepo.class);
-		salesorderheaderRepo = context.getBean(SalesorderheaderRepo.class);
-		salespersonRepo = context.getBean(SalespersonRepo.class);
+
 		businessentityRepo = context.getBean(BusinessentityRepo.class);
-		employeeRepo = context.getBean(EmployeeRepo.class);
 		personRepository = context.getBean(PersonRepo.class);
 		
 		firstStep(context);
 		addUsers(context);
 		addCreditcards(context);
+		addEmployee(context);
 		addSalespersons(context);
 		addSalesorderdetails(context);
 		addSalesheaders(context);
 		finalStep(context);
+		changeIdToBusinessId(context);
 	}
 	
 	private static void firstStep(ConfigurableApplicationContext context) {
@@ -115,14 +99,20 @@ public class TallerPruebas {
 	}
 	
 	private static void addCreditcards(ConfigurableApplicationContext context) {
-		Creditcard creditcard = new Creditcard();
-		creditcard.setCardnumber("123456789963");
-		creditcard.setCardtype(CreditcardType.PLATINUM);
-		creditcard.setExpmonth(11);
-		creditcard.setExpyear(2025);
+		Creditcard cc = new Creditcard();
+		cc.setCardnumber("123456789963");
+		cc.setCardtype(CreditcardType.PLATINUM);
+		cc.setExpmonth(11);
+		cc.setExpyear(2025);
 		
-		creditcardServiceImp.saveCreditCard(creditcard);
-		creditcardId = creditcard.getCreditcardid();
+		//creditcardServiceImp.saveCreditCard(creditcard);
+		//creditcardId = creditcard.getCreditcardid();
+		creditcard = cc; 
+	}
+	
+	private static void addEmployee(ConfigurableApplicationContext context) {
+		Employee e = new Employee();
+		
 		
 	}
 	
@@ -136,13 +126,16 @@ public class TallerPruebas {
 		s.setSaleslastyear(new BigDecimal(25));
 		s.setSalesytd(new BigDecimal(12));
 		
+		salesperson = s;
+		
+		/*
 		salespersonServiceImp.saveSalesPerson(s);
 		
 		Salesperson s2 = s;
 		s2.setBusinessentityid(businessentityId);
 		
 		salespersonServiceImp.editSalesPerson(s2);
-		salespersonId = s2.getBusinessentityid();
+		salespersonId = s2.getBusinessentityid();*/
 	}
 	
 	private static void addSalesheaders(ConfigurableApplicationContext context) {
@@ -152,13 +145,15 @@ public class TallerPruebas {
 		header.setShipdate(LocalDate.parse("2025-12-05"));
 		header.setSubtotal(new BigDecimal(20));
 		
+		salesorderheader = header;
 		
+		/*
 		header.setCreditcard(creditcardServiceImp.findCreditCard(creditcardId).get());
 		header.setSalesperson(salespersonServiceImp.findSalesperson(salespersonId).get());
 		header.addSalesorderdetail(salesorderdetailServiceImp.findSalesorderdetail(detailId).get());
 		
 		salesorderheaderServiceImp.saveSalesOrderHeader(header);
-		headerId = header.getSalesorderid();
+		headerId = header.getSalesorderid();*/
 	}
 	
 	private static void addSalesorderdetails(ConfigurableApplicationContext context) {
@@ -169,16 +164,36 @@ public class TallerPruebas {
 		s.setRowguid(10);
 		s.setUnitprice(new BigDecimal(5));
 		s.setUnitpricediscount(new BigDecimal(7));
-		s.setSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
+		//s.setSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
 		
+		salesorderdetail = s;
+		
+		/*
 		salesorderdetailServiceImp.saveSalesOrderDetails(s);
-		detailId = s.getId();
+		detailId = s.getId();*/
 	}
 
 	
 	private static void finalStep(ConfigurableApplicationContext context) {
-		Creditcard cc = creditcardServiceImp.findCreditCard(creditcardId).get();
-		cc.addSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
+		//creditcard.addSalesorderheader(salesorderheader);
+		creditcardServiceImp.saveCreditCard(creditcard);
+		
+		salespersonServiceImp.saveSalesPerson(salesperson);
+		
+		salesorderheader.setCreditcard(creditcard);
+		salesorderheader.setSalesperson(salesperson);
+		salesorderheaderServiceImp.saveSalesOrderHeader(salesorderheader);
+		
+		salesorderdetail.setSalesorderheader(salesorderheader);
+		salesorderdetailServiceImp.saveSalesOrderDetails(salesorderdetail);
+	}
+	
+	private static void changeIdToBusinessId(ConfigurableApplicationContext context) {
+		Salesperson s2 = salesperson;
+		s2.setBusinessentityid(businessentityId);
+		salespersonServiceImp.editSalesPerson(s2);
+		
+		
 	}
 	
 }

@@ -49,7 +49,7 @@
   <input type="text" name="subtotal" id="subtotal" class="form-control" th:value="${salesorderheader.subtotal}" />
   <span th:if="${#fields.hasErrors('subtotal')}" th:errors="*{subtotal}" class="text-danger"></span>
   <br>
-  <!-- 
+  
   <label for="billtoaddressid">Bill Address Id: </label>
   <input type="text" name="billtoaddressid" id="billtoaddressid" class="form-control" th:value="${salesorderheader.billtoaddressid}" />
   <span th:if="${#fields.hasErrors('billtoaddressid')}" th:errors="*{billtoaddressid}" class="text-danger"></span>
@@ -119,8 +119,6 @@
   <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger"></span>
   <br>
   
-  
-  
   <label for="taxamt">Taxamt: </label>
   <input type="text" name="taxamt" id="taxamt" class="form-control" th:value="${salesorderheader.taxamt}" />
   <span th:if="${#fields.hasErrors('taxamt')}" th:errors="*{taxamt}" class="text-danger"></span>
@@ -130,9 +128,9 @@
   <input type="text" name="totaldue" id="totaldue" class="form-control" th:value="${salesorderheader.totaldue}" />
   <span th:if="${#fields.hasErrors('totaldue')}" th:errors="*{totaldue}" class="text-danger"></span>
   <br>
-  -->
   
   
+  <!-- 
   <label for="salesperson">Sales Person ID: </label>
   <select id="salesperson" th:field="*{salesperson}">
 	<option
@@ -156,7 +154,7 @@
   </select>
   <span th:if="${#fields.hasErrors('creditcard')}" th:errors="*{creditcard}" class="text-danger"></span>
   <br>
-  
+   -->
   <div class="row">
     <div class="col-md-4 mt-3">
       <input type="submit" name="action" class="btn btn-primary" value="Add">

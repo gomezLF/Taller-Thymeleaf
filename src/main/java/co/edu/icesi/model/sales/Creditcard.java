@@ -57,6 +57,7 @@ public class Creditcard implements Serializable {
 	public Creditcard() {
 		setSalesorderheaders(new ArrayList<>());
 		setModifieddate(LocalDate.now());
+		//salesorderheaders.iterator()
 	}
 
 	public Integer getCreditcardid() {

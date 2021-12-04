@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.edu.icesi.exception.LogicalException;
 import co.edu.icesi.model.sales.Creditcard;
 import co.edu.icesi.model.sales.CreditcardType;
-import co.edu.icesi.repositories.SalesorderheaderRepo;
 import co.edu.icesi.services.CreditcardServiceImp;
 
 @Controller
@@ -26,12 +25,10 @@ import co.edu.icesi.services.CreditcardServiceImp;
 public class CreditcardControllerImp implements CreditcardController {
 
 	private CreditcardServiceImp creditcardServiceImp;
-	private SalesorderheaderRepo salesorderheaderRepo;
 	
 	@Autowired
-	public CreditcardControllerImp(CreditcardServiceImp creditcardServiceImp, SalesorderheaderRepo salesorderheaderRepo) {
+	public CreditcardControllerImp(CreditcardServiceImp creditcardServiceImp) {
 		this.creditcardServiceImp = creditcardServiceImp;
-		this.salesorderheaderRepo = salesorderheaderRepo;
 	}
 	
 	@Override
@@ -39,7 +36,6 @@ public class CreditcardControllerImp implements CreditcardController {
 	public String addCreditcard(Model model) {
 		model.addAttribute("creditcard", new Creditcard());
 		model.addAttribute("types", CreditcardType.values());
-		//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		return "/creditcard/add-creditcard";
 	}
 	

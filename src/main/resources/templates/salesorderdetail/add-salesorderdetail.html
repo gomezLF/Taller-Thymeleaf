@@ -55,18 +55,18 @@
   <span th:if="${#fields.hasErrors('unitpricediscount')}" th:errors="*{unitpricediscount}" class="text-danger"></span>
   <br>
   <!-- 
-  <label for="salesorderheaders">Sales Order Header: </label>
-  <select id="salesorderheaders" th:field="*{salesorderheaders}">
+  <label for="salesorderheader">Sales Order Header ID: </label>
+  <select id="salesorderheader" th:field="*{salesorderheader}">
 	<option
 		th:each="soh : ${salesorderheaders}"
         th:value="${soh}"
-        th:text="${soh}"
+        th:text="${soh.salesorderid}"
         th:attrappend="selected=${salesorderdetail.salesorderheader != null and salesorderdetail.salesorderheader == soh}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('salesorderheader')}" th:errors="*{salesorderheader}" class="text-danger"></span>
   <br>
-   -->
+    -->
   <div class="row">
     <div class="col-md-4 mt-3">
       <input type="submit" name="action" class="btn btn-primary" value="Add">

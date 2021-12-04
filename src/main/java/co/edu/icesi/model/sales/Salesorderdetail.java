@@ -2,10 +2,8 @@ package co.edu.icesi.model.sales;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,14 +34,18 @@ public class Salesorderdetail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SALESORDERDETAIL_SALESORDERDETAILID_GENERATOR")
 	private Integer id;
 	
+	@NotNull(message = "El campo no debe estar vacío")
+	@NotBlank(message = "El campo no debe estar vacío")
 	private String carriertrackingnumber;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@FutureOrPresent(message = "La fecha de modificación debe ser la actual")
 	private LocalDate modifieddate;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private Integer orderqty;
-
+	
+	@NotNull(message = "El campo no debe estar vacío")
 	private Integer rowguid;
 	
 	@NotNull(message = "El unitprice no debe estar vacio")

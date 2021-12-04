@@ -24,15 +24,6 @@ public class SalesorderdetailServiceImp implements SalesorderdetailService {
 	@Override
 	public void saveSalesOrderDetails(Salesorderdetail salesorderdetail) {
 		salesorderdetailRepo.save(salesorderdetail);
-		
-		/**
-		if(salesorderheaderRepo.existsById(salesorderdetail.getSalesorderheader().getSalesorderid())
-				&& !salesorderdetailRepo.existsById(salesorderdetail.getId().getSalesorderdetailid())) 
-		{
-			//salesorderdetail.setId(new SalesorderdetailPK());
-			//validateConstraints(salesorderdetail);
-			
-		}*/
 	}
 
 	@Override
@@ -48,14 +39,6 @@ public class SalesorderdetailServiceImp implements SalesorderdetailService {
 			
 			salesorderdetailRepo.save(temp.get());
 		}
-		
-		/**
-		if(salesorderheaderRepo.existsById(salesorderdetail.getSalesorderheader().getSalesorderid())
-				&& salesorderdetailRepo.existsById(salesorderdetail.getId().getSalesorderdetailid())) 
-		{
-			validateConstraints(salesorderdetail);
-			salesorderdetailRepo.save(salesorderdetail);
-		}*/
 	}
 	
 	@Override

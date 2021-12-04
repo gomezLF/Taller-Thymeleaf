@@ -25,14 +25,32 @@
         class="container my-5"
         method="POST"
         action="#"
-        th:action="@{/salesorderdetail/edit/{id}(id=${salesorderdetail.id})}"
+        th:action="@{/salesorderheader/edit/{id}(id=${salesorderheader.salesorderid})}"
         th:object="${salesorderheader}"
 >
 
-<h1>New Sales Order Header</h1>
+<h1>Change Sales Order Header Values</h1>
+  <input type="text" name="salesorderid" id="salesorderid" th:value="${salesorderheader.salesorderid}" class="form-control" readonly hidden="true">
+  <span th:if="${#fields.hasErrors('salesorderid')}" th:errors="*{salesorderid}" class="text-danger"></span>
+  
   <label for="accountnumber">Account Number: </label>
   <input type="text" name="accountnumber" id="accountnumber" class="form-control" th:value="${salesorderheader.accountnumber}" />
   <span th:if="${#fields.hasErrors('accountnumber')}" th:errors="*{accountnumber}" class="text-danger"></span>
+  <br>
+  
+  <label for="orderdate">Order Date: </label>
+  <input type="date" name="orderdate" id="orderdate" class="form-control" th:value="${salesorderheader.orderdate}" />
+  <span th:if="${#fields.hasErrors('orderdate')}" th:errors="*{orderdate}" class="text-danger"></span>
+  <br>
+  
+  <label for="shipdate">Ship Date: </label>
+  <input type="date" name="shipdate" id="shipdate" class="form-control" th:value="${salesorderheader.shipdate}" />
+  <span th:if="${#fields.hasErrors('shipdate')}" th:errors="*{shipdate}" class="text-danger"></span>
+  <br>
+  
+  <label for="subtotal">SubTotal: </label>
+  <input type="text" name="subtotal" id="subtotal" class="form-control" th:value="${salesorderheader.subtotal}" />
+  <span th:if="${#fields.hasErrors('subtotal')}" th:errors="*{subtotal}" class="text-danger"></span>
   <br>
   
   <label for="billtoaddressid">Bill Address Id: </label>
@@ -49,7 +67,7 @@
   <input type="text" name="creditcardapprovalcode" id="creditcardapprovalcode" class="form-control" th:value="${salesorderheader.creditcardapprovalcode}" />
   <span th:if="${#fields.hasErrors('creditcardapprovalcode')}" th:errors="*{creditcardapprovalcode}" class="text-danger"></span>
   <br>
-  
+   
   <label for="duedate">Due Date: </label>
   <input type="date" name="duedate" id="duedate" class="form-control" th:value="${salesorderheader.duedate}" />
   <span th:if="${#fields.hasErrors('duedate')}" th:errors="*{duedate}" class="text-danger"></span>
@@ -70,10 +88,7 @@
   <span th:if="${#fields.hasErrors('onlineorderflag')}" th:errors="*{onlineorderflag}" class="text-danger"></span>
   <br>
   
-  <label for="orderdate">Order Date: </label>
-  <input type="date" name="orderdate" id="orderdate" class="form-control" th:value="${salesorderheader.orderdate}" />
-  <span th:if="${#fields.hasErrors('orderdate')}" th:errors="*{orderdate}" class="text-danger"></span>
-  <br>
+  
   
   <label for="purchaseordernumber">Purchase Order Number: </label>
   <input type="text" name="purchaseordernumber" id="purchaseordernumber" class="form-control" th:value="${salesorderheader.purchaseordernumber}" />
@@ -90,10 +105,7 @@
   <span th:if="${#fields.hasErrors('rowguid')}" th:errors="*{rowguid}" class="text-danger"></span>
   <br>
   
-  <label for="shipdate">Ship Date: </label>
-  <input type="date" name="shipdate" id="shipdate" class="form-control" th:value="${salesorderheader.shipdate}" />
-  <span th:if="${#fields.hasErrors('shipdate')}" th:errors="*{shipdate}" class="text-danger"></span>
-  <br>
+  
   
   <label for="shipmethodid">Ship Method Id: </label>
   <input type="text" name="shipmethodid" id="shipmethodid" class="form-control" th:value="${salesorderheader.shipmethodid}" />
@@ -110,11 +122,6 @@
   <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger"></span>
   <br>
   
-  <label for="subtotal">SubTotal: </label>
-  <input type="text" name="subtotal" id="subtotal" class="form-control" th:value="${salesorderheader.subtotal}" />
-  <span th:if="${#fields.hasErrors('subtotal')}" th:errors="*{subtotal}" class="text-danger"></span>
-  <br>
-  
   <label for="taxamt">Taxamt: </label>
   <input type="text" name="taxamt" id="taxamt" class="form-control" th:value="${salesorderheader.taxamt}" />
   <span th:if="${#fields.hasErrors('taxamt')}" th:errors="*{taxamt}" class="text-danger"></span>
@@ -125,33 +132,35 @@
   <span th:if="${#fields.hasErrors('totaldue')}" th:errors="*{totaldue}" class="text-danger"></span>
   <br>
   
-  <label for="salesperson">Sales Person: </label>
+  
+  <!-- 
+  <label for="salesperson">Sales Person ID: </label>
   <select id="salesperson" th:field="*{salesperson}">
 	<option
 		th:each="sp : ${salespersons}"
         th:value="${sp}"
-        th:text="${sp}"
+        th:text="${sp.businessentityid}"
         th:attrappend="selected=${salesorderheader.salesperson != null and salesorderheader.salesperson == sp}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('salesperson')}" th:errors="*{salesperson}" class="text-danger"></span>
   <br>
-  
-  <label for="creditcard">Credit Card: </label>
+   
+  <label for="creditcard">Credit Card Nunber: </label>
   <select id="creditcard" th:field="*{creditcard}">
 	<option
 		th:each="cc : ${creditcards}"
         th:value="${cc}"
-        th:text="${cc}"
+        th:text="${cc.cardnumber}"
         th:attrappend="selected=${salesorderheader.creditcard != null and salesorderheader.creditcard == cc}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('creditcard')}" th:errors="*{creditcard}" class="text-danger"></span>
   <br>
-  
+   -->
   <div class="row">
     <div class="col-md-4 mt-3">
-      <input type="submit" name="action" class="btn btn-primary" value="Add">
+      <input type="submit" name="action" class="btn btn-primary" value="Save changes">
     </div>
     <div class="col-md-3 mt-3">
       <input type="submit" name="action" class="btn btn-secondary" value="Cancel">

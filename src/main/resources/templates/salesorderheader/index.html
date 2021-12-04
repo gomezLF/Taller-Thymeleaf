@@ -34,8 +34,8 @@
 		                        <th>Order Date</th>
 		                        <th>Ship Date</th>
 		                        <th>SubTotal</th>
-		                        <th>Sales Person Id</th>
-		                        <th>Credit Card Number</th>
+		                        <!-- <th>Sales Person Id</th> -->
+		                        <!-- <th>Credit Card Number</th> -->
 		                        <th>Edit</th>
 							</tr>
 						</thead>
@@ -47,8 +47,8 @@
 				                <td class="text-info" th:text="${soh.orderdate}"></td>
 				                <td class="text-info" th:text="${soh.shipdate}"></td>
 				                <td class="text-info" th:text="${soh.subtotal}"></td>
-				                <td><a th:text="${soh.salesperson.businessentityid}" th:href="@{/salesperson?id={id}(id=${soh.salesperson.businessentityid})}"></a></td>
-				               	<td><a th:text="${soh.creditcard.cardnumber}" th:href="@{/creditcard?id={id}(id=${soh.creditcard.creditcardid})}"></a></td>
+				                <!-- <td><a th:text="${soh.salesperson.businessentityid}" th:href="@{/salesperson?id={id}(id=${soh.salesperson.businessentityid})}"></a></td> -->
+				               	<!-- <td><a th:text="${soh.creditcard.cardnumber}" th:href="@{/creditcard?id={id}(id=${soh.creditcard.creditcardid})}"></a></td> -->
 				                <td><a th:href="@{/salesorderheader/edit/{id}(id=${soh.salesorderid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>
 		            		</tr>
 						</tbody>

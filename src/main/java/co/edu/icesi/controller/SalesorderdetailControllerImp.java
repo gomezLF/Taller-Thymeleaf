@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import co.edu.icesi.exception.LogicalException;
-import co.edu.icesi.model.person.UserType;
 import co.edu.icesi.model.sales.Salesorderdetail;
-import co.edu.icesi.model.sales.SalesorderdetailPK;
 import co.edu.icesi.repositories.SalesorderheaderRepo;
 import co.edu.icesi.services.SalesorderdetailServiceImp;
 
@@ -39,6 +36,7 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 	@GetMapping("/add")
 	public String addSalesorderdetail(Model model) {
 		model.addAttribute("salesorderdetail", new Salesorderdetail());
+		//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		return "salesorderdetail/add-salesorderdetail";
 	}
 	
@@ -47,6 +45,7 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 	public String saveSalesorderdetail(@ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("salesorderdetail", salesorderdetail);
+			//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 			return "/salesorderdetail/add-salesorderdetail";
 		}
 		
@@ -70,23 +69,25 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 	
 	@Override
 	@GetMapping("/edit/{id}")
-	public String showUpdateSalesorderdetail(@PathVariable("id") SalesorderdetailPK id, Model model) {
-		Optional<Salesorderdetail> salesOptional = salesorderdetailService.findSalesorderdetail(id.getSalesorderdetailid());
+	public String showUpdateSalesorderdetail(@PathVariable("id") Integer id, Model model) {
+		Optional<Salesorderdetail> salesOptional = salesorderdetailService.findSalesorderdetail(id);
 		
-		if(salesOptional == null) {
-			throw new IllegalArgumentException("Invalid user Id:" + id.getSalesorderdetailid());
+		if(!salesOptional.isPresent()) {
+			throw new IllegalArgumentException("Invalid user Id:" + id);
 		}
 		
 		model.addAttribute("salesorderdetail", salesOptional.get());
 		model.addAttribute("salesorderdetails", salesorderdetailService.findAll());
+		//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		return "salesorderdetail/update-salesorderdetail";
 	}
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateSalesorderdetail(@PathVariable("id") SalesorderdetailPK id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, BindingResult bindingResult, Model model) {
+	public String updateSalesorderdetail(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 			return "user/update-user";
 		}
 		
