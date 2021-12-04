@@ -34,7 +34,7 @@
 		                        <th>Expiration Month</th>
 		                        <th>Expiration Year</th>
 		                        <th>Modified Date</th>
-		                       <!--  <th>Sales Order Header</th> -->
+		                       	<th>Sales Order Header</th>
 		                        <th>Edit</th>
 							</tr>
 						</thead>
@@ -46,7 +46,14 @@
 		                        <td class="text-info" th:text="${cc.expmonth}"></td>
 		                        <td class="text-info" th:text="${cc.expyear}"></td>
 		                        <td class="text-info" th:text="${cc.modifieddate}"></td>
-		                       <!--  <td><a th:text="${cc.salesorderheaders.salesorderid}" th:href="@{/salesorderheaders?id={id}(id=${cc.salesorderheaders.salesorderid})}"></a></td> -->
+		                        <td>
+		                        	<table>
+			                        	<tr th:each="header : ${cc.salesorderheaders.iterator()}">
+			                        		<td><a th:text="${header.salesorderid}" th:href="@{/salesorderheader?id={id}(id=${header.salesorderid})}"></a></td>
+			                        	</tr>
+		                        	</table>
+		                        </td>
+		                       	<!-- <td><a th:text="${cc.salesorderheaders.salesorderid}" th:href="@{/salesorderheaders?id={id}(id=${cc.salesorderheaders.salesorderid})}"></a></td> -->
 		                        <td><a th:href="@{/creditcard/edit/{id}(id=${cc.creditcardid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>
                     		</tr>
 						</tbody>
