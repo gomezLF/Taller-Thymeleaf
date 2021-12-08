@@ -9,7 +9,7 @@ import co.edu.icesi.model.hr.Employee;
 @Service
 public interface EmployeeService {
 	void saveEmployee(Employee employee);
-	void editEmployee(Employee employee);
+	void editEmployee(Integer id, Employee employee);
 	Optional<Employee> findEmployee(int id);
 	Iterable<Employee> findAll();
 }
