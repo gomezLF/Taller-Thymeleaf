@@ -91,7 +91,7 @@ public class EmployeeControllerImp implements EmployeeController{
 		}
 		
 		if(action != null && action.equals("Save changes")) {
-			employeeServiceImp.editEmployee(employee);
+			employeeServiceImp.editEmployee(id, employee);
 			model.addAttribute("employees", employeeServiceImp.findAll());
 			
 		}else if(action != null && action.equals("Cancel")) {
