@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import co.edu.icesi.exception.LogicalException;
 import co.edu.icesi.model.sales.Creditcard;
 import co.edu.icesi.model.sales.CreditcardType;
 import co.edu.icesi.services.CreditcardServiceImp;
@@ -90,12 +89,7 @@ public class CreditcardControllerImp implements CreditcardController {
 		}
 		
 		if(action != null && action.equals("Save changes")) {
-			try {
-				creditcardServiceImp.editCreditCard(creditcard);
-			} catch (LogicalException e) {
-				e.printStackTrace();
-			}
-			
+			creditcardServiceImp.editCreditCard(creditcard);
 			model.addAttribute("creditcards", creditcardServiceImp.findAll());
 			
 		}else if(action != null && action.equals("Cancel")) {
