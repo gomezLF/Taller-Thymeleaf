@@ -33,6 +33,7 @@
 		                        <th>Gender</th>
 		                        <th>Hire Date</th>
 		                        <th>Modified Date</th>
+		                        <th>Sales Person</th>
 		                        <th>Edit</th>
 							</tr>
 						</thead>
@@ -43,6 +44,7 @@
 		                        <td class="text-info" th:text="${em.gender}"></td>
 		                        <td class="text-info" th:text="${em.hiredate}"></td>
 		                        <td class="text-info" th:text="${em.modifieddate}"></td>
+		                        <th><a th:text="SalesPerson" th:href="@{/salesperson?id={id}(id=${em.salesperson.businessentityid})}"></a></th>
 		                        <td><a th:href="@{/employee/edit/{id}(id=${em.businessentityid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>
                     		</tr>
 						</tbody>
