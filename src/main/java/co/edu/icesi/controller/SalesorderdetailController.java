@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.model.sales.Salesorderdetail;
-import co.edu.icesi.model.sales.SalesorderdetailPK;
 
 public interface SalesorderdetailController {
 	
