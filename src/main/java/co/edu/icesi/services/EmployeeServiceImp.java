@@ -23,8 +23,8 @@ public class EmployeeServiceImp implements EmployeeService {
 	}
 
 	@Override
-	public void editEmployee(Employee employee) {
-		Optional<Employee> temp = findEmployee(employee.getBusinessentityid());
+	public void editEmployee(Integer id,Employee employee) {
+		Optional<Employee> temp = findEmployee(id);
 		
 		if(temp.isPresent()) {
 			temp.get().setBusinessentityid(employee.getBusinessentityid());
