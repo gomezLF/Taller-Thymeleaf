@@ -2,7 +2,6 @@ package co.edu.icesi.model.hr;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -39,10 +36,10 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEE_BUSINESSENTITYID_GENERATOR")
 	private Integer businessentityid;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@NotNull(message = "El campo no debe estar vacío")
 	@Past(message = "La fecha de nacimiento del empleado debe ser anterior a la fecha actual")
-	private Date birthdate;
+	private LocalDate birthdate;
 	
 	@NotNull(message = "El campo no debe estar vacío")
 	private String currentflag;
@@ -50,10 +47,10 @@ public class Employee implements Serializable {
 	@NotNull(message = "El campo no debe estar vacío")
 	private EmployeeGender gender;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@NotNull(message = "El campo no debe estar vacío")
 	@PastOrPresent(message = "La fecha de contratación no puede ser posterior a la fecha actual")
-	private Date hiredate;
+	private LocalDate hiredate;
 	
 	@NotNull(message = "El campo no debe estar vacío")
 	private String jobtitle;
@@ -121,7 +118,7 @@ public class Employee implements Serializable {
 		return jobcandidate;
 	}
 
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return this.birthdate;
 	}
 
@@ -149,7 +146,7 @@ public class Employee implements Serializable {
 		return this.gender;
 	}
 
-	public Date getHiredate() {
+	public LocalDate getHiredate() {
 		return this.hiredate;
 	}
 
@@ -219,7 +216,7 @@ public class Employee implements Serializable {
 		return jobcandidate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -247,7 +244,7 @@ public class Employee implements Serializable {
 		this.gender = gender;
 	}
 
-	public void setHiredate(Date hiredate) {
+	public void setHiredate(LocalDate hiredate) {
 		this.hiredate = hiredate;
 	}
 
