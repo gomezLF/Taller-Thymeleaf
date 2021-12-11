@@ -30,9 +30,7 @@
 							<tr>
 								<th>ID</th>
 		                        <th>Bonus</th>
-		                        <th>Commission pct</th>
 		                        <th>Modified Date</th>
-		                        <th>Row Guid</th>
 		                        <th>Sales Last Year</th>
 		                        <th>Sales Quota</th>
 		                        <th>Sales ytd</th>
@@ -44,13 +42,17 @@
                     		<tr th:each="sp : ${salespersons}">
 		                        <td class="text-info" th:text="${sp.businessentityid}"></td>
 		                        <td class="text-info" th:text="${sp.bonus}"></td>
-		                        <td class="text-info" th:text="${sp.commissionpct}"></td>
 		                        <td class="text-info" th:text="${sp.modifieddate}"></td>
-		                        <td class="text-info" th:text="${sp.rowguid}"></td>
 		                        <td class="text-info" th:text="${sp.saleslastyear}"></td>
 		                        <td class="text-info" th:text="${sp.salesquota}"></td>
 		                        <td class="text-info" th:text="${sp.salesytd}"></td>
-		                       <!--  <td><a th:href="@{/salesorderheader/edit/{id}(id=${soh.salesorderid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>  -->
+								<td>
+									<table>
+										<tr th:each="soh : ${sp.salesorderheaders.iterator()}">
+											<td><a th:text="Header" th:href="@{/salesorderheader?id={id}(id=${soh.salesorderid})}"></a></td>
+										</tr>
+									</table>
+								</td>
 		                       	<td><a th:href="@{/salesperson/edit/{id}(id=${sp.businessentityid})}" class="btn btn-primary"> <i class="fas fa-edit"></i></a></td>
                     		</tr>
 						</tbody>
