@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.model.hr.Employee;
 import co.edu.icesi.model.hr.EmployeeGender;
+import co.edu.icesi.repositories.SalespersonRepo;
 import co.edu.icesi.services.EmployeeServiceImp;
 
 @Controller
@@ -22,15 +23,18 @@ import co.edu.icesi.services.EmployeeServiceImp;
 public class EmployeeControllerImp implements EmployeeController{
 	
 	EmployeeServiceImp employeeServiceImp;
+	SalespersonRepo salespersonRepo;
 	
 	
-	public EmployeeControllerImp(EmployeeServiceImp employeeServiceImp) {
+	public EmployeeControllerImp(EmployeeServiceImp employeeServiceImp, SalespersonRepo salespersonRepo) {
 		this.employeeServiceImp = employeeServiceImp;
+		this.salespersonRepo = salespersonRepo;
 	}
 
 	@Override
 	@GetMapping("/add")
 	public String addEmployee(Model model) {
+		model.addAttribute("salespersons", salespersonRepo.findAll());
 		model.addAttribute("types", EmployeeGender.values());
 		model.addAttribute("employee", new Employee());
 		return "/employee/add-employee";
@@ -38,10 +42,11 @@ public class EmployeeControllerImp implements EmployeeController{
 	
 	@Override
 	@PostMapping("/add")
-	public String saveEmployee(@RequestParam(value = "action", required = true) String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult result, Model model) {
+	public String saveEmployee(@RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult result, Model model) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());
+			model.addAttribute("salespersons", salespersonRepo.findAll());
 			
 			return "/employee/add-employee";
 		}
@@ -69,23 +74,26 @@ public class EmployeeControllerImp implements EmployeeController{
 	public String showUpdateEmployee(@PathVariable("id") Integer id, Model model) {
 		Optional<Employee> employee = employeeServiceImp.findEmployee(id);
 		
-		if(!employee.isPresent()) {
+		if(employee.isEmpty()) {
 			new IllegalArgumentException("Invalid soh Id:" + id);
+
+		}else {
+			model.addAttribute("employee", employee.get());
+			model.addAttribute("types", EmployeeGender.values());
+			model.addAttribute("employees", employeeServiceImp.findAll());
+			model.addAttribute("salespersons", salespersonRepo.findAll());
 		}
-		
-		model.addAttribute("employee", employee.get());
-		model.addAttribute("types", EmployeeGender.values());
-		model.addAttribute("employees", employeeServiceImp.findAll());
-		
+
 		return "employee/update-employee";
 	}
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult bindingResult, Model model) {
+	public String updateEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());
+			model.addAttribute("salespersons", salespersonRepo.findAll());
 			
 			return "empployee/update-employee";
 		}
