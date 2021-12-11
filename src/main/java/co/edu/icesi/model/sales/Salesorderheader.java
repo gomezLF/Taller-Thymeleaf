@@ -110,7 +110,7 @@ public class Salesorderheader implements Serializable {
 	// bi-directional many-to-one association to Salesperson
 	@ManyToOne
 	@JoinColumn(name = "salespersonid")
-	//@NotNull(message = "Debe escoger un vendedor")
+	@NotNull(message = "Debe escoger un vendedor")
 	private Salesperson salesperson;
 
 	// bi-directional many-to-one association to Salesterritory
