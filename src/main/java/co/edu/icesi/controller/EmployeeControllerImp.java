@@ -23,18 +23,15 @@ import co.edu.icesi.services.EmployeeServiceImp;
 public class EmployeeControllerImp implements EmployeeController{
 	
 	EmployeeServiceImp employeeServiceImp;
-	SalespersonRepo salespersonRepo;
 	
 	
-	public EmployeeControllerImp(EmployeeServiceImp employeeServiceImp, SalespersonRepo salespersonRepo) {
+	public EmployeeControllerImp(EmployeeServiceImp employeeServiceImp) {
 		this.employeeServiceImp = employeeServiceImp;
-		this.salespersonRepo = salespersonRepo;
 	}
 
 	@Override
 	@GetMapping("/add")
 	public String addEmployee(Model model) {
-		model.addAttribute("salespersons", salespersonRepo.findAll());
 		model.addAttribute("types", EmployeeGender.values());
 		model.addAttribute("employee", new Employee());
 		return "/employee/add-employee";
@@ -46,7 +43,6 @@ public class EmployeeControllerImp implements EmployeeController{
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());
-			model.addAttribute("salespersons", salespersonRepo.findAll());
 			
 			return "/employee/add-employee";
 		}
@@ -81,7 +77,6 @@ public class EmployeeControllerImp implements EmployeeController{
 			model.addAttribute("employee", employee.get());
 			model.addAttribute("types", EmployeeGender.values());
 			model.addAttribute("employees", employeeServiceImp.findAll());
-			model.addAttribute("salespersons", salespersonRepo.findAll());
 		}
 
 		return "employee/update-employee";
@@ -93,7 +88,6 @@ public class EmployeeControllerImp implements EmployeeController{
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());
-			model.addAttribute("salespersons", salespersonRepo.findAll());
 			
 			return "empployee/update-employee";
 		}
