@@ -79,6 +79,7 @@ public class Employee implements Serializable {
 	// bi-directional many-to-one association to Salesperson
 	@ManyToOne
 	@JoinColumn(name = "salespersonid")
+	@NotNull(message = "Se debe escoger un vendedor")
 	private Salesperson salesperson;
 	
 	// bi-directional many-to-one association to Employeedepartmenthistory
