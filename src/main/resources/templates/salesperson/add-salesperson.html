@@ -65,7 +65,7 @@
 	<option
 		th:each="em : ${employeess}"
         th:value="${em.businessentityid}"
-        th:text="${em.modifieddate}"
+        th:text="${em.businessentityid}"
         th:attrappend="selected=${salesperson.employee != null and salesperson.employee.businessentityid == em.businessentityid}?'selected'"
 	></option>  
   </select>
