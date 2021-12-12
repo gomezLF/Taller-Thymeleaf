@@ -58,7 +58,8 @@ public class Salesorderdetail implements Serializable {
 
 	// bi-directional many-to-one association to Salesorderheader
 	@ManyToOne
-	@JoinColumn(name = "salesorderid", insertable = false, updatable = false)
+	@JoinColumn(name = "salesorderid")
+	@NotNull(message = "Debe escoger un encabezado de venta")
 	private Salesorderheader salesorderheader;
 
 	// bi-directional many-to-one association to Specialofferproduct
