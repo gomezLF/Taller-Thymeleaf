@@ -76,7 +76,8 @@ public class SalespersonControllerImp implements SalespersonController {
 		if(salesperson.isPresent()) {
 			new IllegalArgumentException("Invalid soh Id:" + id);
 		}
-		
+
+		model.addAttribute("employeess", employeeRepo.findAll());
 		model.addAttribute("salesperson", salesperson.get());
 		model.addAttribute("salespersons", salespersonService.findAll());
 		return "salesperson/update-salesperson";
@@ -86,6 +87,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	@PostMapping("/edit/{id}")
 	public String updateSalesperson(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			model.addAttribute("employeess", employeeRepo.findAll());
 			model.addAttribute("salesperson", salesperson);
 			return "salesperson/update-salesperson";
 		}
