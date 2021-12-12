@@ -2,6 +2,7 @@ package co.edu.icesi.controller;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,8 @@ import co.edu.icesi.services.SalespersonServiceImp;
 @RequestMapping("/salesperson")
 public class SalespersonControllerImp implements SalespersonController {
 	
-	private SalespersonServiceImp salespersonService;
-	private EmployeeRepo employeeRepo;
+	private final SalespersonServiceImp salespersonService;
+	private final EmployeeRepo employeeRepo;
 	
 	
 	@Autowired
@@ -35,7 +36,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@GetMapping("/add")
-	public String addSalesperson(Model model) {
+	public String addSalesperson(@NotNull Model model) {
 		model.addAttribute("employeess", employeeRepo.findAll());
 		model.addAttribute("salesperson", new Salesperson());
 		return "/salesperson/add-salesperson";
@@ -43,7 +44,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@PostMapping("/add")
-	public String saveSalesperson(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String saveSalesperson(@ModelAttribute("salesperson") @Validated Salesperson salesperson, @NotNull BindingResult result, Model model, @RequestParam(value = "action") String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employeess", employeeRepo.findAll());
 			model.addAttribute("salesperson", salesperson);
@@ -63,7 +64,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@GetMapping
-	public String indexSalesperson(Model model) {
+	public String indexSalesperson(@NotNull Model model) {
 		model.addAttribute("salespersons", salespersonService.findAll());
 		return "salesperson/index";
 	}
@@ -85,7 +86,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateSalesperson(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult bindingResult, Model model) {
+	public String updateSalesperson(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("salesperson") @Validated Salesperson salesperson, @NotNull BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employeess", employeeRepo.findAll());
 			model.addAttribute("salesperson", salesperson);
