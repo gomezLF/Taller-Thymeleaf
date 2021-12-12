@@ -54,19 +54,19 @@
   <input type="number" min="1" max="100" step="1" value="1" name="unitpricediscount" id="unitpricediscount" class="form-control" th:value="${salesorderdetail.unitpricediscount}" />
   <span th:if="${#fields.hasErrors('unitpricediscount')}" th:errors="*{unitpricediscount}" class="text-danger"></span>
   <br>
-  <!-- 
+
   <label for="salesorderheader">Sales Order Header ID: </label>
   <select id="salesorderheader" th:field="*{salesorderheader}">
 	<option
 		th:each="soh : ${salesorderheaders}"
-        th:value="${soh}"
+        th:value="${soh.salesorderid}"
         th:text="${soh.salesorderid}"
-        th:attrappend="selected=${salesorderdetail.salesorderheader != null and salesorderdetail.salesorderheader == soh}?'selected'"
+        th:attrappend="selected=${salesorderdetail.salesorderheader != null and salesorderdetail.salesorderheader.salesorderid == soh.salesorderid}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('salesorderheader')}" th:errors="*{salesorderheader}" class="text-danger"></span>
   <br>
-    -->
+
   <div class="row">
     <div class="col-md-4 mt-3">
       <input type="submit" name="action" class="btn btn-primary" value="Add">
