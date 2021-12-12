@@ -34,6 +34,7 @@
 		                        <th>Sales Last Year</th>
 		                        <th>Sales Quota</th>
 		                        <th>Sales ytd</th>
+								<th>Employee</th>
 		                        <th>Sales Header</th>
 		                        <th>Edit</th>
 							</tr>
@@ -46,6 +47,7 @@
 		                        <td class="text-info" th:text="${sp.saleslastyear}"></td>
 		                        <td class="text-info" th:text="${sp.salesquota}"></td>
 		                        <td class="text-info" th:text="${sp.salesytd}"></td>
+								<td><a th:text="Employee" th:href="@{/employee?id={id}(id=${sp.getEmployee().getBusinessentityid()})}"></a></td>
 								<td>
 									<table>
 										<tr th:each="soh : ${sp.salesorderheaders.iterator()}">
