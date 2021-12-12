@@ -1,8 +1,8 @@
 package co.edu.icesi.controller;
 
-
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ import co.edu.icesi.services.CreditcardServiceImp;
 @RequestMapping("/creditcard")
 public class CreditcardControllerImp implements CreditcardController {
 
-	private CreditcardServiceImp creditcardServiceImp;
+	private final CreditcardServiceImp creditcardServiceImp;
 	
 	@Autowired
 	public CreditcardControllerImp(CreditcardServiceImp creditcardServiceImp) {
@@ -32,7 +32,7 @@ public class CreditcardControllerImp implements CreditcardController {
 	
 	@Override
 	@GetMapping("/add")
-	public String addCreditcard(Model model) {
+	public String addCreditcard(@NotNull Model model) {
 		model.addAttribute("creditcard", new Creditcard());
 		model.addAttribute("types", CreditcardType.values());
 		return "/creditcard/add-creditcard";
@@ -40,7 +40,7 @@ public class CreditcardControllerImp implements CreditcardController {
 	
 	@Override
 	@PostMapping("/add")
-	public String saveCreditcard(@RequestParam(value = "action", required = true) String action, @ModelAttribute("creditcard") @Validated Creditcard creditcard, BindingResult result, Model model) {
+	public String saveCreditcard(@RequestParam(value = "action") String action, @ModelAttribute("creditcard") @Validated Creditcard creditcard, @NotNull BindingResult result, Model model) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("creditcard", creditcard);
 			model.addAttribute("types", CreditcardType.values());
@@ -60,7 +60,7 @@ public class CreditcardControllerImp implements CreditcardController {
 
 	@Override
 	@GetMapping
-	public String indexCreditcard(Model model) {
+	public String indexCreditcard(@NotNull Model model) {
 		model.addAttribute("creditcards", creditcardServiceImp.findAll());
 		return "creditcard/index";
 	}
@@ -70,7 +70,7 @@ public class CreditcardControllerImp implements CreditcardController {
 	public String showUpdateCreditcard(@PathVariable("id") Integer id, Model model) {
 		Optional<Creditcard> creditcard = creditcardServiceImp.findCreditCard(id);
 		
-		if(!creditcard.isPresent()) {
+		if(creditcard.isEmpty()) {
 			new IllegalArgumentException("Invalid soh Id:" + id);
 		}
 		
@@ -82,7 +82,7 @@ public class CreditcardControllerImp implements CreditcardController {
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateCreditcard(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("creditcard") @Validated Creditcard creditcard, BindingResult bindingResult, Model model) {
+	public String updateCreditcard(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("creditcard") @Validated Creditcard creditcard, @NotNull BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("types", CreditcardType.values());
 			return "creditcard/update-creditcard";
