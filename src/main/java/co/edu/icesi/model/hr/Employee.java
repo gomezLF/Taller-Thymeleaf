@@ -70,7 +70,6 @@ public class Employee implements Serializable {
 	
 	// bi-directional many-to-one association to Salesperson
 	@OneToOne
-	@JoinColumn(name = "salespersonid")
 	//@NotNull(message = "Se debe escoger un vendedor")
 	private Salesperson salesperson;
 	
