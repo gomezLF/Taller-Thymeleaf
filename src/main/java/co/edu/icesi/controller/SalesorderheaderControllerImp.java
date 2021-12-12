@@ -39,8 +39,8 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	@Override
 	@GetMapping("/add")
 	public String addSalesorderheader(Model model) {
-		//model.addAttribute("salespersons", salespersonRepo.findAll());
-		//model.addAttribute("creditcards", creditcardRepo.findAll());
+		model.addAttribute("salespersons", salespersonRepo.findAll());
+		model.addAttribute("creditcards", creditcardRepo.findAll());
 		model.addAttribute("salesorderheader", new Salesorderheader());
 		return "salesorderheader/add-salesorderheader";
 	}
@@ -49,9 +49,9 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	@PostMapping("/add")
 	public String saveSalesorderheader(@ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			model.addAttribute("salespersons", salespersonRepo.findAll());
+			model.addAttribute("creditcards", creditcardRepo.findAll());
 			model.addAttribute("salesorderheader", salesorderheader);
-			//model.addAttribute("salespersons", salespersonRepo.findAll());
-			//model.addAttribute("creditcards", creditcardRepo.findAll());
 			return "/salesorderheader/add-salesorderheader";
 		}
 		
@@ -81,10 +81,10 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 		if(!salesorderheader.isPresent()) {
 			new IllegalArgumentException("Invalid soh Id:" + id);
 		}
-		
+
+		model.addAttribute("salespersons", salespersonRepo.findAll());
+		model.addAttribute("creditcards", creditcardRepo.findAll());
 		model.addAttribute("salesorderheader", salesorderheader.get());
-		//model.addAttribute("salespersons", salespersonRepo.findAll());
-		//model.addAttribute("creditcards", creditcardRepo.findAll());
 		model.addAttribute("salesorderheaders", salesorderheaderService.findAll());
 		return "salesorderheader/update-salesorderheader";
 	}
@@ -93,9 +93,9 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	@PostMapping("/edit/{id}")
 	public String updateSalesorderheader(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			model.addAttribute("salespersons", salespersonRepo.findAll());
+			model.addAttribute("creditcards", creditcardRepo.findAll());
 			model.addAttribute("salesorderheader", salesorderheader);
-			//model.addAttribute("salespersons", salespersonRepo.findAll());
-			//model.addAttribute("creditcards", creditcardRepo.findAll());
 			return "salesorderheader/update-salesorderheader";
 		}
 		
