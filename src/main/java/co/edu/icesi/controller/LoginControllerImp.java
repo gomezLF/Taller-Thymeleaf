@@ -1,5 +1,6 @@
 package co.edu.icesi.controller;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ public class LoginControllerImp implements LoginController {
 
 	@Override
 	@GetMapping("/login")
-	public String login(Model model) {
+	public String login(@NotNull Model model) {
 		model.addAttribute("user", new User());
 		return "login";
 	}
