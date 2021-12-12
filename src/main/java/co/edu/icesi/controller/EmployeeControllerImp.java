@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.model.hr.Employee;
 import co.edu.icesi.model.hr.EmployeeGender;
-import co.edu.icesi.repositories.SalespersonRepo;
 import co.edu.icesi.services.EmployeeServiceImp;
 
 @Controller
 @RequestMapping("/employee")
 public class EmployeeControllerImp implements EmployeeController{
 	
-	EmployeeServiceImp employeeServiceImp;
+	private final EmployeeServiceImp employeeServiceImp;
 	
 	
 	public EmployeeControllerImp(EmployeeServiceImp employeeServiceImp) {
