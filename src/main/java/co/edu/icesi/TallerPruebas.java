@@ -32,7 +32,6 @@ import co.edu.icesi.services.UserServiceImp;
 @SpringBootApplication
 @ComponentScan(basePackages = {"co.edu.icesi"})
 public class TallerPruebas {
-	private static int businessentityId;
 	
 	private static Creditcard creditcard;
 	private static Employee employee;
@@ -72,14 +71,12 @@ public class TallerPruebas {
 		addSalesorderdetails(context);
 		addSalesheaders(context);
 		finalStep(context);
-		changeIdToBusinessId(context);
 	}
 	
 	private static void firstStep(ConfigurableApplicationContext context) {
 		Businessentity businessentity = new Businessentity();
 		
 		businessentityRepo.save(businessentity);
-		businessentityId = businessentity.getBusinessentityid();
 	}
 	
 	private static void addUsers(ConfigurableApplicationContext context) {
@@ -174,12 +171,6 @@ public class TallerPruebas {
 		
 		salesorderdetail.setSalesorderheader(salesorderheader);
 		salesorderdetailServiceImp.saveSalesOrderDetails(salesorderdetail);
-	}
-	
-	private static void changeIdToBusinessId(ConfigurableApplicationContext context) {
-		Salesperson s2 = salesperson;
-		s2.setBusinessentityid(businessentityId);
-		salespersonServiceImp.editSalesPerson(s2);
 	}
 	
 }
