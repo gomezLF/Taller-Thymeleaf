@@ -2,6 +2,7 @@ package co.edu.icesi.controller;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +32,7 @@ public class EmployeeControllerImp implements EmployeeController{
 
 	@Override
 	@GetMapping("/add")
-	public String addEmployee(Model model) {
+	public String addEmployee(@NotNull Model model) {
 		model.addAttribute("types", EmployeeGender.values());
 		model.addAttribute("employee", new Employee());
 		return "/employee/add-employee";
@@ -39,7 +40,7 @@ public class EmployeeControllerImp implements EmployeeController{
 	
 	@Override
 	@PostMapping("/add")
-	public String saveEmployee(@RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult result, Model model) {
+	public String saveEmployee(@RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, @NotNull BindingResult result, Model model) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());
@@ -60,7 +61,7 @@ public class EmployeeControllerImp implements EmployeeController{
 	
 	@Override
 	@GetMapping
-	public String indexEmployee(Model model) {
+	public String indexEmployee(@NotNull Model model) {
 		model.addAttribute("employees", employeeServiceImp.findAll());
 		return "employee/index";
 	}
@@ -84,7 +85,7 @@ public class EmployeeControllerImp implements EmployeeController{
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, BindingResult bindingResult, Model model) {
+	public String updateEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("employee") @Validated Employee employee, @NotNull BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("employee", employee);
 			model.addAttribute("types", EmployeeGender.values());

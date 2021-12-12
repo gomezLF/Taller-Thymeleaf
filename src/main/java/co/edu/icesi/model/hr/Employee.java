@@ -68,9 +68,8 @@ public class Employee implements Serializable {
 
 	private Integer vacationhours;
 	
-	// bi-directional many-to-one association to Salesperson
+	// bi-directional one-to-one association to Salesperson
 	@OneToOne
-	//@NotNull(message = "Se debe escoger un vendedor")
 	private Salesperson salesperson;
 	
 	// bi-directional many-to-one association to Employeedepartmenthistory
