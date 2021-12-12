@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import co.edu.icesi.exception.LogicalException;
-import co.edu.icesi.model.sales.CreditcardType;
 import co.edu.icesi.model.sales.Salesperson;
 import co.edu.icesi.repositories.EmployeeRepo;
 import co.edu.icesi.services.SalespersonServiceImp;
@@ -38,6 +36,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	@Override
 	@GetMapping("/add")
 	public String addSalesperson(Model model) {
+		model.addAttribute("employeess", employeeRepo.findAll());
 		model.addAttribute("salesperson", new Salesperson());
 		return "/salesperson/add-salesperson";
 	}
@@ -46,6 +45,7 @@ public class SalespersonControllerImp implements SalespersonController {
 	@PostMapping("/add")
 	public String saveSalesperson(@ModelAttribute("salesperson") @Validated Salesperson salesperson, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			model.addAttribute("employeess", employeeRepo.findAll());
 			model.addAttribute("salesperson", salesperson);
 			return "/salesperson/add-salesperson";
 		}

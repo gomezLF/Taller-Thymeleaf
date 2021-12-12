@@ -10,6 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import co.edu.icesi.model.hr.Employee;
+import co.edu.icesi.model.hr.EmployeeGender;
 import co.edu.icesi.model.person.Businessentity;
 import co.edu.icesi.model.person.Person;
 import co.edu.icesi.model.person.User;
@@ -22,6 +23,7 @@ import co.edu.icesi.model.sales.Salesperson;
 import co.edu.icesi.repositories.BusinessentityRepo;
 import co.edu.icesi.repositories.PersonRepo;
 import co.edu.icesi.services.CreditcardServiceImp;
+import co.edu.icesi.services.EmployeeServiceImp;
 import co.edu.icesi.services.SalesorderdetailServiceImp;
 import co.edu.icesi.services.SalesorderheaderServiceImp;
 import co.edu.icesi.services.SalespersonServiceImp;
@@ -43,6 +45,7 @@ public class TallerPruebas {
 	private static SalesorderdetailServiceImp salesorderdetailServiceImp;
 	private static SalesorderheaderServiceImp salesorderheaderServiceImp;
 	private static SalespersonServiceImp salespersonServiceImp;
+	private static EmployeeServiceImp employeeServiceImp;
 	
 	private static BusinessentityRepo businessentityRepo;
 	private static PersonRepo personRepository;
@@ -56,6 +59,7 @@ public class TallerPruebas {
 		salesorderdetailServiceImp = context.getBean(SalesorderdetailServiceImp.class);
 		salesorderheaderServiceImp = context.getBean(SalesorderheaderServiceImp.class);
 		salespersonServiceImp = context.getBean(SalespersonServiceImp.class);
+		employeeServiceImp = context.getBean(EmployeeServiceImp.class);
 
 		businessentityRepo = context.getBean(BusinessentityRepo.class);
 		personRepository = context.getBean(PersonRepo.class);
@@ -105,15 +109,19 @@ public class TallerPruebas {
 		cc.setExpmonth(11);
 		cc.setExpyear(2025);
 		
-		//creditcardServiceImp.saveCreditCard(creditcard);
-		//creditcardId = creditcard.getCreditcardid();
 		creditcard = cc; 
 	}
 	
 	private static void addEmployee(ConfigurableApplicationContext context) {
 		Employee e = new Employee();
+		e.setBirthdate(LocalDate.parse("1999-05-18"));
+		e.setCurrentflag("Activo");
+		e.setGender(EmployeeGender.MALE);
+		e.setHiredate(LocalDate.parse("2021-01-10"));
+		e.setJobtitle("Ingeniero");
+		e.setMaritalstatus("Casado");
 		
-		
+		employee = e;
 	}
 	
 	private static void addSalespersons(ConfigurableApplicationContext context) {
@@ -127,15 +135,6 @@ public class TallerPruebas {
 		s.setSalesytd(new BigDecimal(12));
 		
 		salesperson = s;
-		
-		/*
-		salespersonServiceImp.saveSalesPerson(s);
-		
-		Salesperson s2 = s;
-		s2.setBusinessentityid(businessentityId);
-		
-		salespersonServiceImp.editSalesPerson(s2);
-		salespersonId = s2.getBusinessentityid();*/
 	}
 	
 	private static void addSalesheaders(ConfigurableApplicationContext context) {
@@ -146,14 +145,6 @@ public class TallerPruebas {
 		header.setSubtotal(new BigDecimal(20));
 		
 		salesorderheader = header;
-		
-		/*
-		header.setCreditcard(creditcardServiceImp.findCreditCard(creditcardId).get());
-		header.setSalesperson(salespersonServiceImp.findSalesperson(salespersonId).get());
-		header.addSalesorderdetail(salesorderdetailServiceImp.findSalesorderdetail(detailId).get());
-		
-		salesorderheaderServiceImp.saveSalesOrderHeader(header);
-		headerId = header.getSalesorderid();*/
 	}
 	
 	private static void addSalesorderdetails(ConfigurableApplicationContext context) {
@@ -164,20 +155,17 @@ public class TallerPruebas {
 		s.setRowguid(10);
 		s.setUnitprice(new BigDecimal(5));
 		s.setUnitpricediscount(new BigDecimal(7));
-		//s.setSalesorderheader(salesorderheaderServiceImp.findSalesorderheader(headerId).get());
 		
 		salesorderdetail = s;
-		
-		/*
-		salesorderdetailServiceImp.saveSalesOrderDetails(s);
-		detailId = s.getId();*/
 	}
 
 	
 	private static void finalStep(ConfigurableApplicationContext context) {
-		//creditcard.addSalesorderheader(salesorderheader);
 		creditcardServiceImp.saveCreditCard(creditcard);
-		
+
+		employeeServiceImp.saveEmployee(employee);
+
+		salesperson.setEmployee(employee);
 		salespersonServiceImp.saveSalesPerson(salesperson);
 		
 		salesorderheader.setCreditcard(creditcard);
@@ -192,8 +180,6 @@ public class TallerPruebas {
 		Salesperson s2 = salesperson;
 		s2.setBusinessentityid(businessentityId);
 		salespersonServiceImp.editSalesPerson(s2);
-		
-		
 	}
 	
 }

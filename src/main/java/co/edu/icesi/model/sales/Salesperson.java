@@ -6,15 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -64,9 +56,9 @@ public class Salesperson implements Serializable {
 	@OneToMany(mappedBy = "salesperson")
 	private List<Salesorderheader> salesorderheaders;
 	
-	// bi-directional many-to-one association to Employee
-	@OneToMany(mappedBy = "salesperson")
-	private List<Employee> employees;
+	// bi-directional one-to-one association to Employee
+	@OneToOne(mappedBy = "salesperson")
+	private Employee employee;
 
 	// bi-directional many-to-one association to Salesterritory
 	@ManyToOne
@@ -87,7 +79,6 @@ public class Salesperson implements Serializable {
 
 	public Salesperson() {
 		setSalesorderheaders(new ArrayList<Salesorderheader>());
-		setEmployees(new ArrayList<Employee>());
 		setModifieddate(LocalDate.now());
 	}
 
@@ -96,13 +87,6 @@ public class Salesperson implements Serializable {
 		salesorderheader.setSalesperson(this);
 
 		return salesorderheader;
-	}
-	
-	public Employee addEmployee(Employee employee) {
-		getEmployees().add(employee);
-		employee.setSalesperson(this);
-		
-		return employee;
 	}
 
 	public Salespersonquotahistory addSalespersonquotahistory(Salespersonquotahistory salespersonquotahistory) {
@@ -154,8 +138,8 @@ public class Salesperson implements Serializable {
 		return this.salesorderheaders;
 	}
 	
-	public List<Employee> getEmployees(){
-		return this.employees;
+	public Employee getEmployee(){
+		return this.employee;
 	}
 
 	public List<Salespersonquotahistory> getSalespersonquotahistories() {
@@ -187,13 +171,6 @@ public class Salesperson implements Serializable {
 		salesorderheader.setSalesperson(null);
 
 		return salesorderheader;
-	}
-	
-	public Employee removeEmployee(Employee employee) {
-		getEmployees().remove(employee);
-		employee.setSalesperson(null);
-		
-		return employee;
 	}
 
 	public Salespersonquotahistory removeSalespersonquotahistory(Salespersonquotahistory salespersonquotahistory) {
@@ -245,8 +222,8 @@ public class Salesperson implements Serializable {
 		this.salesorderheaders = salesorderheaders;
 	}
 	
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 	public void setSalespersonquotahistories(List<Salespersonquotahistory> salespersonquotahistories) {
