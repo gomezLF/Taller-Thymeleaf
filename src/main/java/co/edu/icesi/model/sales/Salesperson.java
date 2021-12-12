@@ -57,7 +57,8 @@ public class Salesperson implements Serializable {
 	private List<Salesorderheader> salesorderheaders;
 	
 	// bi-directional one-to-one association to Employee
-	@OneToOne(mappedBy = "salesperson")
+	@OneToOne
+	@NotNull(message = "Se debe escoger un vendedor")
 	private Employee employee;
 
 	// bi-directional many-to-one association to Salesterritory
@@ -224,6 +225,7 @@ public class Salesperson implements Serializable {
 	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+		employee.setSalesperson(this);
 	}
 	
 	public void setSalespersonquotahistories(List<Salespersonquotahistory> salespersonquotahistories) {
