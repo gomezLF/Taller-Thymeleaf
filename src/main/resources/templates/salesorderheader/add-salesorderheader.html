@@ -128,33 +128,31 @@
   <input type="text" name="totaldue" id="totaldue" class="form-control" th:value="${salesorderheader.totaldue}" />
   <span th:if="${#fields.hasErrors('totaldue')}" th:errors="*{totaldue}" class="text-danger"></span>
   <br>
-  
-  
-  <!-- 
+
   <label for="salesperson">Sales Person ID: </label>
   <select id="salesperson" th:field="*{salesperson}">
 	<option
 		th:each="sp : ${salespersons}"
-        th:value="${sp}"
+        th:value="${sp.businessentityid}"
         th:text="${sp.businessentityid}"
-        th:attrappend="selected=${salesorderheader.salesperson != null and salesorderheader.salesperson == sp}?'selected'"
+        th:attrappend="selected=${salesorderheader.salesperson != null and salesorderheader.salesperson.businessentityid == sp.businessentityid}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('salesperson')}" th:errors="*{salesperson}" class="text-danger"></span>
   <br>
-   
-  <label for="creditcard">Credit Card Nunber: </label>
+
+  <label for="creditcard">Credit Card Number: </label>
   <select id="creditcard" th:field="*{creditcard}">
 	<option
 		th:each="cc : ${creditcards}"
-        th:value="${cc}"
+        th:value="${cc.creditcardid}"
         th:text="${cc.cardnumber}"
-        th:attrappend="selected=${salesorderheader.creditcard != null and salesorderheader.creditcard == cc}?'selected'"
+        th:attrappend="selected=${salesorderheader.creditcard != null and salesorderheader.creditcard.creditcardid == cc.creditcardid}?'selected'"
 	></option>  
   </select>
   <span th:if="${#fields.hasErrors('creditcard')}" th:errors="*{creditcard}" class="text-danger"></span>
   <br>
-   -->
+
   <div class="row">
     <div class="col-md-4 mt-3">
       <input type="submit" name="action" class="btn btn-primary" value="Add">
