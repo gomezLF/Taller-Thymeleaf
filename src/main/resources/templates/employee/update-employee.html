@@ -54,6 +54,21 @@
   <input type="date" name="hiredate" id="hiredate" class="form-control" th:value="${employee.hiredate}" />
   <span th:if="${#fields.hasErrors('hiredate')}" th:errors="*{hiredate}" class="text-danger"></span>
   <br>
+
+  <label for="currentflag">Current Flag: </label>
+  <input type="text" name="currentflag" id="currentflag" class="form-control" th:value="${employee.currentflag}" />
+  <span th:if="${#fields.hasErrors('currentflag')}" th:errors="*{currentflag}" class="text-danger"></span>
+  <br>
+
+  <label for="jobtitle">Job Title: </label>
+  <input type="text" name="jobtitle" id="jobtitle" class="form-control" th:value="${employee.jobtitle}" />
+  <span th:if="${#fields.hasErrors('jobtitle')}" th:errors="*{jobtitle}" class="text-danger"></span>
+  <br>
+
+  <label for="maritalstatus">Marital Status: </label>
+  <input type="text" name="maritalstatus" id="maritalstatus" class="form-control" th:value="${employee.maritalstatus}" />
+  <span th:if="${#fields.hasErrors('maritalstatus')}" th:errors="*{maritalstatus}" class="text-danger"></span>
+  <br>
     
   <div class="row">
     <div class="col-md-4 mt-3">
