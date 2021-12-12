@@ -5,10 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,27 +26,29 @@ public class Employee implements Serializable {
 	private Integer businessentityid;
 
 	//@Temporal(TemporalType.DATE)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@NotNull(message = "El campo no debe estar vacío")
 	@Past(message = "La fecha de nacimiento del empleado debe ser anterior a la fecha actual")
 	private LocalDate birthdate;
 	
-	@NotNull(message = "El campo no debe estar vacío")
+	@NotBlank(message = "El campo no debe estar vacío")
 	private String currentflag;
 	
 	@NotNull(message = "El campo no debe estar vacío")
 	private EmployeeGender gender;
 	
 	//@Temporal(TemporalType.DATE)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@NotNull(message = "El campo no debe estar vacío")
 	@PastOrPresent(message = "La fecha de contratación no puede ser posterior a la fecha actual")
 	private LocalDate hiredate;
 	
-	@NotNull(message = "El campo no debe estar vacío")
+	@NotBlank(message = "El campo no debe estar vacío")
 	private String jobtitle;
 
 	private String loginid;
 	
-	@NotNull(message = "El campo no debe estar vacío")
+	@NotBlank(message = "El campo no debe estar vacío")
 	private String maritalstatus;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
