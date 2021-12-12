@@ -94,7 +94,7 @@ public class Salesorderheader implements Serializable {
 	// bi-directional many-to-one association to Creditcard
 	@ManyToOne
 	@JoinColumn(name = "creditcardid")
-	//@NotNull(message = "Debe escoger una tarjeta de credito")
+	@NotNull(message = "Debe escoger una tarjeta de credito")
 	private Creditcard creditcard;
 
 	// bi-directional many-to-one association to Currencyrate
