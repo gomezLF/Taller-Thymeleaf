@@ -2,6 +2,7 @@ package co.edu.icesi.controller;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,8 @@ import co.edu.icesi.services.SalesorderdetailServiceImp;
 @RequestMapping("/salesorderdetail")
 public class SalesorderdetailControllerImp implements SalesorderdetailController {
 	
-	private SalesorderdetailServiceImp salesorderdetailService;
-	private SalesorderheaderRepo salesorderheaderRepo;
+	private final SalesorderdetailServiceImp salesorderdetailService;
+	private final SalesorderheaderRepo salesorderheaderRepo;
 	
 	@Autowired
 	public SalesorderdetailControllerImp(SalesorderdetailServiceImp salesorderdetailService, SalesorderheaderRepo salesorderheaderRepo) {
@@ -34,18 +35,18 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 	
 	@Override
 	@GetMapping("/add")
-	public String addSalesorderdetail(Model model) {
+	public String addSalesorderdetail(@NotNull Model model) {
+		model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		model.addAttribute("salesorderdetail", new Salesorderdetail());
-		//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		return "salesorderdetail/add-salesorderdetail";
 	}
 	
 	@Override
 	@PostMapping("/add")
-	public String saveSalesorderdetail(@ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String saveSalesorderdetail(@ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, @NotNull BindingResult result, Model model, @RequestParam(value = "action") String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
+			model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 			model.addAttribute("salesorderdetail", salesorderdetail);
-			//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 			return "/salesorderdetail/add-salesorderdetail";
 		}
 		
@@ -62,7 +63,7 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 	
 	@Override
 	@GetMapping
-	public String indexSalesorderdetail(Model model) {
+	public String indexSalesorderdetail(@NotNull Model model) {
 		model.addAttribute("salesorderdetails", salesorderdetailService.findAll());
 		return "salesorderdetail/index";
 	}
@@ -75,19 +76,20 @@ public class SalesorderdetailControllerImp implements SalesorderdetailController
 		if(!salesOptional.isPresent()) {
 			throw new IllegalArgumentException("Invalid user Id:" + id);
 		}
-		
+
+		model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		model.addAttribute("salesorderdetail", salesOptional.get());
 		model.addAttribute("salesorderdetails", salesorderdetailService.findAll());
-		//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
 		return "salesorderdetail/update-salesorderdetail";
 	}
 	
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateSalesorderdetail(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, BindingResult bindingResult, Model model) {
+	public String updateSalesorderdetail(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("salesorderdetail") @Validated Salesorderdetail salesorderdetail, @NotNull BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
-			//model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
+			model.addAttribute("salesorderheaders", salesorderheaderRepo.findAll());
+			model.addAttribute("salesorderdetail", salesorderdetail);
 			return "user/update-user";
 		}
 		
