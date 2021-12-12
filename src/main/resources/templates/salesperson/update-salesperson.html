@@ -49,7 +49,7 @@
   <br>
   
   <label for="saleslastyear">Sales Last Year: </label>
-  <input type="text" name="saleslastyear" id="commissionpct" class="form-control" th:value="${salesperson.saleslastyear}" />
+  <input type="text" name="saleslastyear" id="saleslastyear" class="form-control" th:value="${salesperson.saleslastyear}" />
   <span th:if="${#fields.hasErrors('saleslastyear')}" th:errors="*{saleslastyear}" class="text-danger"></span>
   <br>
   
@@ -62,23 +62,19 @@
   <input type="text" name="salesytd" id="salesytd" class="form-control" th:value="${salesperson.salesytd}" />
   <span th:if="${#fields.hasErrors('salesytd')}" th:errors="*{salesytd}" class="text-danger"></span>
   <br>
-  
-  
-  <!--  
-  <label for="cardtype">Employee: </label>
-  <select id="cardtype" th:field="*{cardtype}">
-	<option
-		th:each="ct : ${creditTypeList}"
-        th:value="${ct}"
-        th:text="${ct}"
-        th:attrappend="selected=${creditcard.cardtype != null and creditcard.cardtype == ct}?'selected'"
-	></option>  
+
+  <label for="employee">Employee: </label>
+  <select id="employee" th:field="*{employee}">
+    <option
+            th:each="em : ${employeess}"
+            th:value="${em.businessentityid}"
+            th:text="${em.modifieddate}"
+            th:attrappend="selected=${salesperson.employee != null and salesperson.employee.businessentityid == em.businessentityid}?'selected'"
+    ></option>
   </select>
-  <span th:if="${#fields.hasErrors('cardtype')}" th:errors="*{cardtype}" class="text-danger"></span>
+  <span th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}" class="text-danger"></span>
   <br>
-  -->
-  
-  
+
   <div class="row">
     <div class="col-md-4 mt-3">
       <input type="submit" name="action" class="btn btn-primary" value="Save changes">
