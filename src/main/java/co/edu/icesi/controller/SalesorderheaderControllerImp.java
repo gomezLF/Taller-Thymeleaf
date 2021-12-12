@@ -2,6 +2,7 @@ package co.edu.icesi.controller;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import co.edu.icesi.exception.LogicalException;
 import co.edu.icesi.model.sales.Salesorderheader;
 import co.edu.icesi.repositories.CreditcardRepo;
 import co.edu.icesi.repositories.SalespersonRepo;
@@ -24,9 +24,9 @@ import co.edu.icesi.services.SalesorderheaderServiceImp;
 @RequestMapping("/salesorderheader")
 public class SalesorderheaderControllerImp implements SalesorderheaderController {
 	
-	private SalesorderheaderServiceImp salesorderheaderService;
-	private SalespersonRepo salespersonRepo;
-	private CreditcardRepo creditcardRepo;
+	private final SalesorderheaderServiceImp salesorderheaderService;
+	private final SalespersonRepo salespersonRepo;
+	private final CreditcardRepo creditcardRepo;
 	
 	@Autowired
 	public SalesorderheaderControllerImp(SalesorderheaderServiceImp salesorderheaderService, SalespersonRepo salespersonRepo, CreditcardRepo creditcardRepo) {
@@ -38,7 +38,7 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	
 	@Override
 	@GetMapping("/add")
-	public String addSalesorderheader(Model model) {
+	public String addSalesorderheader(@NotNull Model model) {
 		model.addAttribute("salespersons", salespersonRepo.findAll());
 		model.addAttribute("creditcards", creditcardRepo.findAll());
 		model.addAttribute("salesorderheader", new Salesorderheader());
@@ -47,7 +47,7 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	
 	@Override
 	@PostMapping("/add")
-	public String saveSalesorderheader(@ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, BindingResult result, Model model, @RequestParam(value = "action", required = true) String action) {
+	public String saveSalesorderheader(@ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, @NotNull BindingResult result, Model model, @RequestParam(value = "action") String action) {
 		if(result.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("salespersons", salespersonRepo.findAll());
 			model.addAttribute("creditcards", creditcardRepo.findAll());
@@ -68,7 +68,7 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	
 	@Override
 	@GetMapping
-	public String indexSalesorderheader(Model model) {
+	public String indexSalesorderheader(@NotNull Model model) {
 		model.addAttribute("salesorderheaders", salesorderheaderService.findAll());
 		return "salesorderheader/index";
 	}
@@ -78,7 +78,7 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 	public String showUpdateSalesorderheader(@PathVariable("id") Integer id, Model model) {
 		Optional<Salesorderheader> salesorderheader = salesorderheaderService.findSalesorderheader(id);
 		
-		if(!salesorderheader.isPresent()) {
+		if(salesorderheader.isEmpty()) {
 			new IllegalArgumentException("Invalid soh Id:" + id);
 		}
 
@@ -91,7 +91,7 @@ public class SalesorderheaderControllerImp implements SalesorderheaderController
 
 	@Override
 	@PostMapping("/edit/{id}")
-	public String updateSalesorderheader(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, BindingResult bindingResult, Model model) {
+	public String updateSalesorderheader(@PathVariable("id") Integer id, @RequestParam(value = "action") String action, @ModelAttribute("salesorderheader") @Validated Salesorderheader salesorderheader, @NotNull BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors() && (action != null && !action.equals("Cancel"))) {
 			model.addAttribute("salespersons", salespersonRepo.findAll());
 			model.addAttribute("creditcards", creditcardRepo.findAll());
