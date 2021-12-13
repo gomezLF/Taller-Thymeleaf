@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Scope("singleton")
-public class CreditcardDaoImp implements Dao {
+public class CreditcardDaoImp implements Dao<Creditcard> {
 
     @PersistenceContext
     EntityManager entityManager;
