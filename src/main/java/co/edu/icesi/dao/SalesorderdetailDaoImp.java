@@ -49,5 +49,5 @@ public class SalesorderdetailDaoImp implements Dao<Salesorderdetail>{
         return entityManager.createQuery(query).getResultList();
     }
 
-    
+
 }
