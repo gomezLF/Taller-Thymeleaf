@@ -3,11 +3,13 @@ package co.edu.icesi.dao;
 import co.edu.icesi.model.sales.Creditcard;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface Dao {
-    Creditcard findById(Integer id);
-    void save(Creditcard creditcard);
-    void update(Creditcard creditcard);
-    void delete(Creditcard creditcard);
-    List<Creditcard> findAll();
+public interface Dao<T> {
+
+    T findById(Integer id);
+    void save(T t);
+    void update(T t);
+    void delete(T t);
+    List<T> findAll();
 }
