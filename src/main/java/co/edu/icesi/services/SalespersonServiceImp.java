@@ -39,6 +39,7 @@ public class SalespersonServiceImp implements SalespersonService {
 			temp.get().setSaleslastyear(salesPerson.getSaleslastyear());
 			temp.get().setSalesquota(salesPerson.getSalesquota());
 			temp.get().setSalesytd(salesPerson.getSalesytd());
+			temp.get().setEmployee(salesPerson.getEmployee());
 			temp.get().setModifieddate(LocalDate.now());
 
 			salespersonDaoImp.update(temp.get());

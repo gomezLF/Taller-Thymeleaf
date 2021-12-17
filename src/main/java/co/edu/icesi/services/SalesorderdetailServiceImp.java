@@ -35,6 +35,7 @@ public class SalesorderdetailServiceImp implements SalesorderdetailService {
 			temp.get().setRowguid(salesorderdetail.getRowguid());
 			temp.get().setUnitprice(salesorderdetail.getUnitprice());
 			temp.get().setUnitpricediscount(salesorderdetail.getUnitpricediscount());
+			temp.get().setSalesorderheader(salesorderdetail.getSalesorderheader());
 			temp.get().setModifieddate(LocalDate.now());
 
 			salesorderdetailDaoImp.update(temp.get());

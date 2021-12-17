@@ -43,6 +43,8 @@ public class SalesorderheaderServiceImp implements SalesorderheaderService {
 			temp.get().setOrderdate(salesorderheader.getOrderdate());
 			temp.get().setShipdate(salesorderheader.getShipdate());
 			temp.get().setSubtotal(salesorderheader.getSubtotal());
+			temp.get().setCreditcard(salesorderheader.getCreditcard());
+			temp.get().setSalesperson(salesorderheader.getSalesperson());
 
 			salesorderheaderDao.update(temp.get());
 		}
