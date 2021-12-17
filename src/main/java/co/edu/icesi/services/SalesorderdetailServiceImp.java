@@ -1,7 +1,9 @@
 package co.edu.icesi.services;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
+import co.edu.icesi.dao.SalesorderdetailDaoImp;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.model.sales.Salesorderdetail;
@@ -10,20 +12,17 @@ import co.edu.icesi.repositories.SalesorderheaderRepo;
 
 @Service
 public class SalesorderdetailServiceImp implements SalesorderdetailService {
-	
-	SalesorderheaderRepo salesorderheaderRepo;
-	SalesorderdetailRepo salesorderdetailRepo;
-	
+
+	private SalesorderdetailDaoImp salesorderdetailDaoImp;
 	
 	
-	public SalesorderdetailServiceImp(SalesorderheaderRepo salesorderheaderRepo, SalesorderdetailRepo salesorderdetailRepo) {
-		this.salesorderheaderRepo = salesorderheaderRepo;
-		this.salesorderdetailRepo = salesorderdetailRepo;
+	public SalesorderdetailServiceImp(SalesorderdetailDaoImp salesorderdetailDaoImp) {
+		this.salesorderdetailDaoImp = salesorderdetailDaoImp;
 	}
 
 	@Override
 	public void saveSalesOrderDetails(Salesorderdetail salesorderdetail) {
-		salesorderdetailRepo.save(salesorderdetail);
+		salesorderdetailDaoImp.save(salesorderdetail);
 	}
 
 	@Override
@@ -36,19 +35,23 @@ public class SalesorderdetailServiceImp implements SalesorderdetailService {
 			temp.get().setRowguid(salesorderdetail.getRowguid());
 			temp.get().setUnitprice(salesorderdetail.getUnitprice());
 			temp.get().setUnitpricediscount(salesorderdetail.getUnitpricediscount());
-			
-			salesorderdetailRepo.save(temp.get());
+			temp.get().setModifieddate(LocalDate.now());
+
+			salesorderdetailDaoImp.update(temp.get());
 		}
 	}
 	
 	@Override
 	public Optional<Salesorderdetail> findSalesorderdetail(int id) {
-		return salesorderdetailRepo.findById(id);
+		return Optional.ofNullable(salesorderdetailDaoImp.findById(id));
 	}
 
 	@Override
 	public Iterable<Salesorderdetail> findAll() {
-		return salesorderdetailRepo.findAll();
+		return salesorderdetailDaoImp.findAll();
 	}
 
+	public void deleteSalesorderdetail(Salesorderdetail salesorderdetail){
+		salesorderdetailDaoImp.delete(salesorderdetail);
+	}
 }

@@ -1,6 +1,7 @@
 package co.edu.icesi.dao;
 
 import co.edu.icesi.model.sales.Creditcard;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 @Repository
 @Scope("singleton")
@@ -40,8 +43,10 @@ public class CreditcardDaoImp implements Dao<Creditcard> {
 
     @Override
     @Transactional
-    public void delete(Creditcard creditcard) {
-        entityManager.remove(creditcard);
+    public void delete(@NotNull Creditcard creditcard) {
+        Optional<Creditcard> optional = Optional.ofNullable(findById(creditcard.getCreditcardid()));
+
+        optional.ifPresent(value -> executeInsideTransaction(entityManager -> entityManager.remove(value)));
     }
 
     @Override
@@ -66,5 +71,14 @@ public class CreditcardDaoImp implements Dao<Creditcard> {
         Query query = entityManager.createQuery("SELECT c FROM Autotransition c WHERE c.expyear = :expyear");
         query.setParameter("expyear", expyear);
         return query.getResultList();
+    }
+
+    private void executeInsideTransaction(Consumer<EntityManager> action) {
+        try {
+            action.accept(entityManager);
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
     }
 }

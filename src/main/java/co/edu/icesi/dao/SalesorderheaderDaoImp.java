@@ -1,6 +1,7 @@
 package co.edu.icesi.dao;
 
 import co.edu.icesi.model.sales.Salesorderheader;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 @Repository
 @Scope("singleton")
@@ -41,8 +44,10 @@ public class SalesorderheaderDaoImp implements Dao<Salesorderheader> {
 
     @Override
     @Transactional
-    public void delete(Salesorderheader salesorderheader) {
-        entityManager.remove(salesorderheader);
+    public void delete(@NotNull Salesorderheader salesorderheader) {
+        Optional<Salesorderheader> optional = Optional.ofNullable(findById(salesorderheader.getSalesorderid()));
+
+        optional.ifPresent(value -> executeInsideTransaction(entityManager -> entityManager.remove(value)));
     }
 
     @Override
@@ -81,5 +86,14 @@ public class SalesorderheaderDaoImp implements Dao<Salesorderheader> {
         Query query = entityManager.createQuery(search);
         query.setParameter("orderdate", orderdate);
         return query.getResultList();
+    }
+
+    private void executeInsideTransaction(Consumer<EntityManager> action) {
+        try {
+            action.accept(entityManager);
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
     }
 }

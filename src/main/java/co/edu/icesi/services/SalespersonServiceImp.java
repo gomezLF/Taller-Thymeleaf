@@ -3,6 +3,7 @@ package co.edu.icesi.services;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import co.edu.icesi.dao.SalespersonDaoImp;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.model.sales.Salesperson;
@@ -14,22 +15,16 @@ import co.edu.icesi.repositories.SalespersonRepo;
 @Service
 public class SalespersonServiceImp implements SalespersonService {
 	
-	SalespersonRepo salespersonRepo;
-	BusinessentityRepo businessentityRepo;
-	EmployeeRepo employeeRepo;
-	PersonRepo personRepo;
+	SalespersonDaoImp salespersonDaoImp;
 	
 	
-	public SalespersonServiceImp(SalespersonRepo salespersonRepo, BusinessentityRepo businessentityRepo, EmployeeRepo employeeRepo, PersonRepo personRepo) {
-		this.salespersonRepo = salespersonRepo;
-		this.businessentityRepo = businessentityRepo;
-		this.employeeRepo = employeeRepo;
-		this.personRepo = personRepo;
+	public SalespersonServiceImp(SalespersonDaoImp salespersonDaoImp) {
+		this.salespersonDaoImp = salespersonDaoImp;
 	}
 	
 	@Override
 	public void saveSalesPerson(Salesperson salesPerson) {
-		salespersonRepo.save(salesPerson);
+		salespersonDaoImp.save(salesPerson);
 	}
 	
 	@Override
@@ -45,18 +40,22 @@ public class SalespersonServiceImp implements SalespersonService {
 			temp.get().setSalesquota(salesPerson.getSalesquota());
 			temp.get().setSalesytd(salesPerson.getSalesytd());
 			temp.get().setModifieddate(LocalDate.now());
-			
-			salespersonRepo.save(temp.get());
+
+			salespersonDaoImp.update(temp.get());
 		}
 	}
 	
 	@Override
 	public Optional<Salesperson> findSalesperson(int id) {
-		return salespersonRepo.findById(id);
+		return Optional.ofNullable(salespersonDaoImp.findById(id));
 	}
 
 	@Override
 	public Iterable<Salesperson> findAll() {
-		return salespersonRepo.findAll();
+		return salespersonDaoImp.findAll();
+	}
+
+	public void deleteSalesperson(Salesperson salesperson){
+		salespersonDaoImp.delete(salesperson);
 	}
 }
